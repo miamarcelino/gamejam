@@ -3,6 +3,7 @@ package io.codeforall.bootcamp;
 public class Game {
 	StartingScreen sc;
 	ChoosePlayer cp;
+	PlayArea pa;
 	Grid grid;
 	Player p1;
 	Enemy enemy;
@@ -11,10 +12,13 @@ public class Game {
 
 	public Game(){
 
+		pa = new PlayArea();
+		pa.load();
 		cp = new ChoosePlayer();
 		cp.load();
 		sc = new StartingScreen();
 		sc.load();
+
 
 
 
@@ -33,6 +37,8 @@ public class Game {
 
 	public void start() {
 		keyboardHandler.setStartingScreen(sc);
+		keyboardHandler.setChoosePlayer(cp);
+		keyboardHandler.setMyPlayArea(pa);
 		keyboardHandler.setMyBullet(b1);
 		keyboardHandler.setMyEnemy(enemy);
 		keyboardHandler.setMyPlayer(p1);

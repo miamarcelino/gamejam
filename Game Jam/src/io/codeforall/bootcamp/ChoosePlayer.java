@@ -13,4 +13,8 @@ public class ChoosePlayer {
 	public void load(){
 		cp.draw();
 	}
+
+	public void delete(){
+		cp.delete();
+	}
 }

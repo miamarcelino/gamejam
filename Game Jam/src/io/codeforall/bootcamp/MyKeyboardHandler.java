@@ -14,6 +14,9 @@ public class MyKeyboardHandler implements KeyboardHandler {
 	private Player myPlayer;
 	private StartingScreen mySC;
 	private ChoosePlayer myCP;
+	private PlayArea myPlayArea;
+
+	private boolean pressedSpace = false;
 
 	public void init() {
 
@@ -22,9 +25,19 @@ public class MyKeyboardHandler implements KeyboardHandler {
 		KeyboardEvent sKey = new KeyboardEvent();
 		KeyboardEvent upKey = new KeyboardEvent();
 		KeyboardEvent downKey = new KeyboardEvent();
+		KeyboardEvent oneKey = new KeyboardEvent();
+		KeyboardEvent twoKey = new KeyboardEvent();
+		KeyboardEvent threeKey = new KeyboardEvent();
 
 		spaceKey.setKey(KeyboardEvent.KEY_SPACE);
 		spaceKey.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+
+		oneKey.setKey(KeyboardEvent.KEY_1);
+		oneKey.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+		twoKey.setKey(KeyboardEvent.KEY_2);
+		twoKey.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
+		threeKey.setKey(KeyboardEvent.KEY_3);
+		threeKey.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
 
 		sKey.setKey(KeyboardEvent.KEY_S);
 		sKey.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
@@ -36,6 +49,9 @@ public class MyKeyboardHandler implements KeyboardHandler {
 		downKey.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
 
 		keyboard.addEventListener(spaceKey);
+		keyboard.addEventListener(oneKey);
+		keyboard.addEventListener(twoKey);
+		keyboard.addEventListener(threeKey);
 		keyboard.addEventListener(sKey);
 		keyboard.addEventListener(upKey);
 		keyboard.addEventListener(downKey);
@@ -45,11 +61,30 @@ public class MyKeyboardHandler implements KeyboardHandler {
 	@Override
 	public void keyPressed(KeyboardEvent keyboardEvent) {
 
-		switch (keyboardEvent.getKey()) {
+		switch (keyboardEvent.getKey() ) {
 
 			case KeyboardEvent.KEY_SPACE:
-				mySC.delete();
-				myCP.load();
+				if(!pressedSpace) {
+					mySC.delete();
+					myCP.load();
+					pressedSpace = true;
+				}
+				break;
+
+			case KeyboardEvent.KEY_1:
+				//falta por cara correspondente e dar delete
+				myCP.delete();
+				myPlayArea.load();
+				break;
+
+			case KeyboardEvent.KEY_2:
+				myCP.delete();
+				myPlayArea.load();
+				break;
+
+			case KeyboardEvent.KEY_3:
+				myCP.delete();
+				myPlayArea.load();
 				break;
 
 			case KeyboardEvent.KEY_S:
@@ -79,11 +114,15 @@ public class MyKeyboardHandler implements KeyboardHandler {
 				break;
 
 			case KeyboardEvent.KEY_UP:
-				myPlayer.moveUp();
+				if(myPlayer.canMoveUp()){
+					myPlayer.moveUp();
+				}
 				break;
 
 			case KeyboardEvent.KEY_DOWN:
-				myPlayer.moveDown();
+				if(myPlayer.canMoveDown()){
+					myPlayer.moveDown();
+				}
 				break;
 		}
 
@@ -106,11 +145,19 @@ public class MyKeyboardHandler implements KeyboardHandler {
 		this.myPlayer = player;
 	}
 
-	public Bullet getMyBullet(){
+	public Bullet getMyBullet() {
 		return myBullet;
 	}
 
-	public void setStartingScreen(StartingScreen sc){
+	public void setStartingScreen(StartingScreen sc) {
 		this.mySC = sc;
+	}
+
+	public void setChoosePlayer(ChoosePlayer cp){
+		this.myCP = cp;
+	}
+
+	public void setMyPlayArea(PlayArea pa){
+		this.myPlayArea = pa;
 	}
 }

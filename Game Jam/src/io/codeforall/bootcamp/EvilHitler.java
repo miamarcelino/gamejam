@@ -8,7 +8,7 @@ public class EvilHitler extends Enemy{
     private boolean dead;
 
     public EvilHitler(){
-        evilHitler = new Picture(1500, 830, "resources/Enemies/evil_hitler.png");
+        evilHitler = new Picture(1500, 760, "resources/Enemies/maria-still-enemy.png");
         dead = false;
 
         init();

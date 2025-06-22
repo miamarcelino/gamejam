@@ -5,7 +5,8 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 public class Player {
 	private Picture player;
 	private Bullet bullet;
-
+	private boolean canMoveUp = true;
+	private boolean canMoveDown = false;
 
 	public Player(Bullet bullet) {
 
@@ -38,6 +39,25 @@ public class Player {
 		player.translate(player.getX(), player.getY());
 	}
 
+	public boolean canMoveUp(){
+		if(player.getY() < 150){
+			canMoveUp = false;
+		} else {
+			canMoveUp = true;
+		}
+
+		return canMoveUp;
+	}
+
+	public boolean canMoveDown(){
+		if(player.getY() > 750){
+			canMoveDown = false;
+		}
+		else {
+			return canMoveDown = true;
+		}
+		return canMoveDown;
+	}
 
 	public int getX(){
 		return player.getX();
