@@ -1,5 +1,6 @@
-package io.codeforall.bootcamp;
+package io.codeforall.bootcamp.shootable.enemies;
 
+import io.codeforall.bootcamp.shootable.Target;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Enemy implements Target {

@@ -1,8 +1,8 @@
-package io.codeforall.bootcamp;
+package io.codeforall.bootcamp.shootable.enemies;
 
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-public class EvilHitler extends Enemy{
+public class EvilHitler extends Enemy {
 
     private Picture evilHitler;
     private boolean dead;

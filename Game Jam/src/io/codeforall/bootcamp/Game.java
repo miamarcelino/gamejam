@@ -1,5 +1,14 @@
 package io.codeforall.bootcamp;
 
+import io.codeforall.bootcamp.bullets.Bullet;
+import io.codeforall.bootcamp.shootable.enemies.Enemy;
+import io.codeforall.bootcamp.shootable.enemies.EvilHitler;
+import io.codeforall.bootcamp.players.Player;
+import io.codeforall.bootcamp.screens.ChoosePlayer;
+import io.codeforall.bootcamp.screens.Grid;
+import io.codeforall.bootcamp.screens.PlayArea;
+import io.codeforall.bootcamp.screens.StartingScreen;
+
 public class Game {
 	StartingScreen sc;
 	ChoosePlayer cp;

@@ -1,5 +1,6 @@
-package io.codeforall.bootcamp;
+package io.codeforall.bootcamp.players;
 
+import io.codeforall.bootcamp.bullets.Bullet;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Player {

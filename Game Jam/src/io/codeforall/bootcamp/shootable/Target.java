@@ -1,4 +1,4 @@
-package io.codeforall.bootcamp;
+package io.codeforall.bootcamp.shootable;
 
 public interface Target {
 

@@ -1,4 +1,4 @@
-package io.codeforall.bootcamp;
+package io.codeforall.bootcamp.screens;
 
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
