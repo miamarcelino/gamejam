@@ -12,7 +12,7 @@ public class Grid {
 		Rectangle grid = new Rectangle(PADDING,PADDING, WIDTH, HEIGHT);
 		grid.fill();
 
-		Picture backGround = new Picture(PADDING,PADDING,"resources/SniperRifle/Background/gameBackground.png");
+		Picture backGround = new Picture(PADDING,PADDING,"resources/Background/background-blueprint.jpg");
 		backGround.draw();
 	}
 

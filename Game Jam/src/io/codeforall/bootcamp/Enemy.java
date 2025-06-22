@@ -2,12 +2,12 @@ package io.codeforall.bootcamp;
 
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-public class Enemie implements Target {
+public class Enemy implements Target {
 
     private Picture enemie;
     private boolean dead;
 
-    public Enemie(){
+    public Enemy(){
         super();
         dead = false;
     }
@@ -25,7 +25,7 @@ public class Enemie implements Target {
 
     @Override
     public void die() {
-        enemie.load("resources/SniperRifle/Enemies/evil_hitler_dead.png");
+        enemie.load("resources/Enemies/evil_hitler_dead.png");
         dead = true;
     }
 
