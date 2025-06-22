@@ -4,7 +4,7 @@ public class Rifle {
 
 	private Bullet myBullet;
 	private int ammo = 0;
-	private final int MAX_AMMO = 8;
+	private final int MAX_AMMO = 6;
 
 //	public Rifle () {
 //		myBullet = new Bullet();

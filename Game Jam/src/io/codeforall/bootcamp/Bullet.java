@@ -7,7 +7,7 @@ public class Bullet extends Rifle{
 	private Picture bullet;
 
 	public Bullet(){
-		bullet = new Picture(-50, 860, "resources/SniperRifle/Bullets/flyingBullet.png");
+		bullet = new Picture(-40, 830, "resources/SniperRifle/Bullets/flyingBullet.png");
 	}
 
 	public void initBullet(){
@@ -16,7 +16,7 @@ public class Bullet extends Rifle{
 
 	public void shootBullet(){
 		if (getAmmo() < getMaxAmmo()) {
-			bullet.translate(200, 0);
+			bullet.translate(300, 0);
 
 			setAmmo(getAmmo()+1);
 		}
@@ -26,7 +26,15 @@ public class Bullet extends Rifle{
 
 	public void deleteBullet(){
 		bullet.delete();
-		setAmmo(0);
+		setAmmo(-1);
+	}
+
+	public int getX(){
+		return bullet.getX();
+	}
+
+	public int getY(){
+		return bullet.getY();
 	}
 
 

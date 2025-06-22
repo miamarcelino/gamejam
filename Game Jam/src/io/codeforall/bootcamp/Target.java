@@ -3,13 +3,18 @@ package io.codeforall.bootcamp;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
-public class Target {
+public interface Target {
 
-	public Target(){
-		Rectangle target = new Rectangle(1790, 950, 100, 100);
+    public void init();
 
-		target.setColor(Color.RED);
-		target.fill();
+    public void delete();
 
-	}
+    public void die();
+
+    public int getX();
+
+    public int getY();
+
+    boolean isDead();
 }
+

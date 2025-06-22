@@ -9,6 +9,8 @@ public class MyKeyboardHandler implements KeyboardHandler {
 	private Bullet myBullet;
 	private Rifle myRifle;
 	private int counter = 0;
+	private Enemie myEnemie;
+	private Player myPlayer;
 
 	public void init() {
 
@@ -17,7 +19,6 @@ public class MyKeyboardHandler implements KeyboardHandler {
 
 		sKey.setKey(KeyboardEvent.KEY_S);
 		sKey.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-		sKey.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
 
 
 		keyboard.addEventListener(sKey);
@@ -29,28 +30,39 @@ public class MyKeyboardHandler implements KeyboardHandler {
 	public void keyPressed(KeyboardEvent keyboardEvent) {
 		if (keyboardEvent.getKey() == KeyboardEvent.KEY_S) {
 
-			myBullet.initBullet();
+			new Thread(() -> {
+
+				myBullet = new Bullet();
+				myBullet.initBullet();
+
+				for (int i = 0; i < myBullet.getMaxAmmo(); i++) {
+					myBullet.shootBullet();
+
+//					if (!myEnemie.isDead() && myBullet.getX() >= myEnemie.getX()
+//							&& Math.abs(myBullet.getY() - myEnemie.getY()) < 300) {
+//
+//						myEnemie.delete();
+//						break;
+//					}
+
+					try {
+						Thread.sleep(100);
+
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				myBullet.deleteBullet();
+				myEnemie.die();
 
 
+			}).start();
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyboardEvent keyboardEvent) {
-		if (keyboardEvent.getKey() == KeyboardEvent.KEY_S) {
 
-			for (int i = 0; i < 9; i++) {
-				delayMethod(1000);
-				if (myBullet.getAmmo() < myBullet.getMaxAmmo()) {
-					myBullet.initBullet();
-					myBullet.shootBullet();
-
-				} else if (myBullet.getAmmo() == myBullet.getMaxAmmo()) {
-					myBullet.deleteBullet();
-					myBullet = new Bullet();
-				}
-			}
-		}
 	}
 
 	public void setMyBullet(Bullet myBullet) {
@@ -59,6 +71,12 @@ public class MyKeyboardHandler implements KeyboardHandler {
 
 	public void setMyRifle(Rifle rifle) {
 		this.myRifle = rifle;
+	}
+
+	public void setMyEnemie(Enemie enemie){ this.myEnemie = enemie;}
+
+	public void setMyPlayer(Player player) {
+		this.myPlayer = player;
 	}
 
 
