@@ -1,5 +1,6 @@
 package io.codeforall.bootcamp.bullets;
 
+import io.codeforall.bootcamp.players.Player;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 
@@ -9,9 +10,9 @@ public class Bullet {
 	private int ammo = 0;
 	private final int MAX_AMMO = 6;
 
-	public Bullet(){
+	public Bullet(int startX, int startY, String rsc){
 
-		bullet = new Picture(-40, 780, "resources/Bullets/flyingBullet.png");
+		bullet = new Picture(startX, startY, rsc);
 	}
 
 	public void initBullet(){
@@ -36,17 +37,15 @@ public class Bullet {
 
 	public void shootBullet(){
 		if (getAmmo() < getMaxAmmo()) {
-			bullet.translate(300, 0);
+			bullet.translate(180, 0);
 
-			setAmmo(getAmmo()+1);
+			setAmmo(getAmmo());
 		}
-
-		System.out.println("Disparei " + getAmmo() + " vezes");
 	}
 
 	public void deleteBullet(){
 		bullet.delete();
-		setAmmo(-1);
+		setAmmo(0);
 	}
 
 	public void moveUp(){

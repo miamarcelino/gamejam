@@ -8,7 +8,7 @@ public class Enemy implements Target {
     private Picture enemie;
     private boolean dead;
 
-    public Enemy(){
+    public Enemy() {
         super();
         dead = false;
     }
@@ -40,7 +40,7 @@ public class Enemy implements Target {
         return enemie.getY();
     }
 
-    public boolean isDead(){
+    public boolean isDead() {
         return dead;
     }
 

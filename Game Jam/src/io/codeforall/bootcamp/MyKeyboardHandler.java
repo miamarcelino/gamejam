@@ -72,7 +72,9 @@ public class MyKeyboardHandler implements KeyboardHandler {
 			case KeyboardEvent.KEY_SPACE:
 				if(!pressedSpace) {
 					mySC.delete();
+					mySC.deleteTextBox();
 					myCP.load();
+
 					pressedSpace = true;
 				}
 				break;
@@ -81,22 +83,26 @@ public class MyKeyboardHandler implements KeyboardHandler {
 				//falta por cara correspondente e dar delete
 				myCP.delete();
 				myPlayArea.load();
+				myPlayer.init();
 				break;
 
 			case KeyboardEvent.KEY_2:
 				myCP.delete();
 				myPlayArea.load();
+				myPlayer.init();
 				break;
 
 			case KeyboardEvent.KEY_3:
 				myCP.delete();
 				myPlayArea.load();
+				myPlayer.init();
 				break;
 
 			case KeyboardEvent.KEY_S:
 				new Thread(() -> {
 
-					myBullet = new Bullet();
+					myBullet = new Bullet(myPlayer.getX() + 40, myPlayer.getY() + 100, "resources/Bullets/daniel-bullet.png");
+					myPlayArea.load();
 					myBullet.initBullet();
 					myPlayer.shootingFace();
 

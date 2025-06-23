@@ -9,12 +9,11 @@ public class Player {
 	private boolean canMoveUp = true;
 	private boolean canMoveDown = false;
 
-	public Player(Bullet bullet) {
+	public Player() {
 
-		player = new Picture(30,780,"resources/Player/daniel-still.png");
-		this.bullet = bullet;
+		player = new Picture(20,650,"resources/Player/daniel-still.png");
+		//this.bullet =  new Bullet(getX(), getY(), "resources/Bullets/daniel-bullet.png");
 
-		init();
 	}
 	public void standardFace(){
 		player.load("resources/Player/daniel-still.png");
@@ -27,12 +26,12 @@ public class Player {
 	}
 
 	public void moveUp(){
-		player.translate(0, -400);
+		player.translate(0, -320);
 		bullet.moveUp();
 	}
 
 	public void moveDown(){
-		player.translate(0, 400);
+		player.translate(0, 320);
 		bullet.moveDown();
 	}
 
@@ -51,7 +50,7 @@ public class Player {
 	}
 
 	public boolean canMoveDown(){
-		if(player.getY() > 750){
+		if(player.getY() > 550){
 			canMoveDown = false;
 		}
 		else {

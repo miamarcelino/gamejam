@@ -8,10 +8,10 @@ public class EvilHitler extends Enemy {
     private boolean dead;
 
     public EvilHitler(){
-        evilHitler = new Picture(1500, 760, "resources/Enemies/maria-still-enemy.png");
+        evilHitler = new Picture(1000, 650, "resources/Enemies/maria-still-enemy.png");
         dead = false;
 
-        init();
+
     }
 
     public void init(){

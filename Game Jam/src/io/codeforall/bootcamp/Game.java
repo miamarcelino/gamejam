@@ -5,15 +5,16 @@ import io.codeforall.bootcamp.shootable.enemies.Enemy;
 import io.codeforall.bootcamp.shootable.enemies.EvilHitler;
 import io.codeforall.bootcamp.players.Player;
 import io.codeforall.bootcamp.screens.ChoosePlayer;
-import io.codeforall.bootcamp.screens.Grid;
 import io.codeforall.bootcamp.screens.PlayArea;
 import io.codeforall.bootcamp.screens.StartingScreen;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
+
+import java.awt.event.KeyEvent;
 
 public class Game {
 	StartingScreen sc;
 	ChoosePlayer cp;
 	PlayArea pa;
-	Grid grid;
 	Player p1;
 	Enemy enemy;
 	Bullet b1;
@@ -29,19 +30,12 @@ public class Game {
 		sc.load();
 
 
-
-
-		//grid = new Grid();
 		keyboardHandler = new MyKeyboardHandler();
-		b1 = keyboardHandler.getMyBullet();
-		p1 = new Player(b1);
-		enemy = new EvilHitler();
 
-//		switch(enemy){
-//			case (enemy instanceof EvilHitler):
-//				new EvilHitler();
-//				break;
-//		}
+
+		b1 = keyboardHandler.getMyBullet();
+		p1 = new Player();
+		enemy = new EvilHitler();
 	}
 
 	public void start() {
