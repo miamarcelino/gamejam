@@ -23,6 +23,7 @@ public class MyKeyboardHandler implements KeyboardHandler {
     private PlayArea myPlayArea;
 
     private boolean pressedSpace = false;
+    private Thread flashingThread = null;
 
     public void init() {
 
@@ -76,19 +77,27 @@ public class MyKeyboardHandler implements KeyboardHandler {
                     mySC.delete();
                     myCP.load();
 
-                    new Thread(() -> {
+                    // Start the flashing thread if it's not already running
+                    flashingThread = new Thread(() -> {
                         myCP.flashingHeads(300);
-                    }).start();
-                    
+                    });
+                    flashingThread.start();
+
                     pressedSpace = true;
                 }
                 break;
 
             case KeyboardEvent.KEY_1:
                 //falta por cara correspondente e dar delete
-                myCP.delete();
-                myPlayArea.load();
-                myPlayer.init();
+
+                // Stops the flashingThread if another key is pressed
+                if(flashingThread != null && flashingThread.isAlive()) {
+                    flashingThread.interrupt();
+
+                    myCP.delete();
+                    myPlayArea.load();
+                    myPlayer.init();
+                }
                 break;
 
             case KeyboardEvent.KEY_2:

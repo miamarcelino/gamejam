@@ -11,7 +11,7 @@ public class Player {
 
     public Player() {
         player = new Picture(20, 650, "resources/Player/Daniel/daniel-still.png");
-        //this.bullet =  new Bullet(getX(), getY(), "resources/Bullets/daniel-bullet.png");
+        this.bullet =  new Bullet(getX(), getY(), "resources/Bullets/daniel-bullet.png");
     }
 
     public void standardFace() {
