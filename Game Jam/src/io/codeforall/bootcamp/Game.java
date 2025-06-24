@@ -7,9 +7,7 @@ import io.codeforall.bootcamp.players.Player;
 import io.codeforall.bootcamp.screens.ChoosePlayer;
 import io.codeforall.bootcamp.screens.PlayArea;
 import io.codeforall.bootcamp.screens.StartingScreen;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 
-import java.awt.event.KeyEvent;
 
 public class Game {
 	StartingScreen sc;

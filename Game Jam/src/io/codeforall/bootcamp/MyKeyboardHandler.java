@@ -50,15 +50,17 @@ public class MyKeyboardHandler implements KeyboardHandler {
 
 		upKey.setKey(KeyboardEvent.KEY_UP);
 		upKey.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
-
 		downKey.setKey(KeyboardEvent.KEY_DOWN);
 		downKey.setKeyboardEventType(KeyboardEventType.KEY_PRESSED);
 
 		keyboard.addEventListener(spaceKey);
+
 		keyboard.addEventListener(oneKey);
 		keyboard.addEventListener(twoKey);
 		keyboard.addEventListener(threeKey);
+
 		keyboard.addEventListener(sKey);
+
 		keyboard.addEventListener(upKey);
 		keyboard.addEventListener(downKey);
 	}
@@ -72,7 +74,7 @@ public class MyKeyboardHandler implements KeyboardHandler {
 			case KeyboardEvent.KEY_SPACE:
 				if(!pressedSpace) {
 					mySC.delete();
-					mySC.deleteTextBox();
+
 					myCP.load();
 
 					pressedSpace = true;
