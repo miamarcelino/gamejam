@@ -9,18 +9,17 @@ public class StartingScreen {
 
 	public StartingScreen(){
 		startingScreen = new Picture(10,10, "resources/Background/starting-screen.png");
-
+		pressStart = new Picture(430, 550, "resources/Buttons/press-start.png");
 	}
 
 	public void load(){
 		startingScreen.draw();
-
-		pressStart = new Picture()
-
+		pressStart.draw();
 	}
 
 	public void delete(){
 		startingScreen.delete();
+		pressStart.delete();
 	}
 
 
