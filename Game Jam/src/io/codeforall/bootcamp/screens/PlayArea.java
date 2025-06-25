@@ -59,6 +59,10 @@ public class PlayArea {
     public void keepShooting() {
         shootingThread = new Thread(() -> {
 
+            if(myBullet == null) {
+                System.out.println("myBullet is null in keepShoting()");
+                return;
+            }
            myBullet.setStartingX(myPlayer.getX() + 40);
            myBullet.setStartingY(myPlayer.getY() + 100);
 
@@ -92,10 +96,13 @@ public class PlayArea {
 
     public void spawnEnemies() {
         for (int i = 0; i < manufacturedTargets; i++) {
+            System.out.println("Spawning enemy #" + i);
+
             Target t = TargetFactory.getNewTarget();
 
             if(t != null) {
                 t.setCollisionDetector(myCollisionDetector);
+                System.out.println("Initializing target " + i + ": " + t.getClass().getSimpleName());
                 t.init();
                 targets[i] = t;
 
@@ -110,6 +117,10 @@ public class PlayArea {
             spawnEnemies();
             myCollisionDetector.check();
         }
+    }
+
+    public void setMyBullet(Bullet bullet) {
+        this.myBullet = bullet;
     }
 
     public void setMyCollisionDetector(Bullet bullet, MyKeyboardHandler keyboardHandler) {

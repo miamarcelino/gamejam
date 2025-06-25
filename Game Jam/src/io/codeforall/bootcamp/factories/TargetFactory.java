@@ -12,10 +12,9 @@ import io.codeforall.bootcamp.shootable.pedestrians.Manel;
 import io.codeforall.bootcamp.shootable.pedestrians.Otavio;
 import io.codeforall.bootcamp.shootable.pedestrians.Tiago;
 
-import java.sql.SQLOutput;
 
 /**
- *  A factory of different types of Targets (see TargetType.java)
+ * A factory of different types of Targets (see TargetType.java)
  *
  * @return a new instantiated target
  */
@@ -26,54 +25,59 @@ public class TargetFactory {
         int random = (int) (Math.random() * TargetType.values().length);
         TargetType targetType = TargetType.values()[random];
 
-        Target target;
+        Target target = null;
 
-        switch(targetType) {
-            case ANDREIA:
-                target = new Andreia();
-                System.out.println("Created ANDREIA");
-                break;
 
-            case CAROLINA:
-                target = new Carolina();
-                System.out.println("Created CAROLINA");
-                break;
+        try {
+            switch (targetType) {
+                case ANDREIA:
+                    target = new Andreia();
+                    System.out.println("Created ANDREIA");
+                    break;
 
-            case ROLO:
-                target = new Rolo();
-                System.out.println("Created ROLO");
-                break;
+                case CAROLINA:
+                    target = new Carolina();
+                    System.out.println("Created CAROLINA");
+                    break;
 
-            case AFONSO:
-                target = new Afonso();
-                System.out.println("Created AFONSO");
-                break;
+                case ROLO:
+                    target = new Rolo();
+                    System.out.println("Created ROLO");
+                    break;
 
-            case MANEL:
-                target = new Manel();
-                System.out.println("Created MANEL");
-                break;
+                case AFONSO:
+                    target = new Afonso();
+                    System.out.println("Created AFONSO");
+                    break;
 
-            case OTAVIO:
-                target = new Otavio();
-                System.out.println("Created OTAVIO");
-                break;
+                case MANEL:
+                    target = new Manel();
+                    System.out.println("Created MANEL");
+                    break;
 
-            case TIAGO:
-                target = new Tiago();
-                System.out.println("Created TIAGO");
-                break;
+//                case OTAVIO:
+//                    target = new Otavio();
+//                    System.out.println("Created OTAVIO");
+//                    break;
 
-            case ELIAS:
-                target = new Elias();
-                System.out.println("Created ELIAS");
-                break;
+                case TIAGO:
+                    target = new Tiago();
+                    System.out.println("Created TIAGO");
+                    break;
 
-            default:
-                target = new Rolo();
-                System.out.println("Created DEFAULT");
+//                case ELIAS:
+//                    target = new Elias();
+//                    System.out.println("Created ELIAS");
+//                    break;
+
+                default:
+                    target = new Rolo();
+                    System.out.println("Created DEFAULT");
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to create target: " + targetType);
+            e.printStackTrace();
         }
-
         return target;
     }
 }

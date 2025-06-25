@@ -24,6 +24,10 @@ public class CollisionDetector {
     public void check() {
 
         for (Target t : targets) {
+            if(bullet == null) {
+                System.out.println("bullet is null in CollisionDetector");
+            }
+
             if (t.getX() == bullet.getMaxX() && t.getY() == bullet.getY()) {
                 bullet.setCollided();
                 t.die();

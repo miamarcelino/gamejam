@@ -6,23 +6,70 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Maria extends Player {
 
-    private Picture maria;
+    private Picture normalFace;
+    private Picture shootingFace;
     private Bullet bullet;
     private boolean canMoveUp = true;
     private boolean canMoveDown = false;
 
     public Maria() {
-        super(new Picture(20, 650, "resources/Player/Maria/maria-still.png"));
-        this.bullet = new MariaBullet(this.getX() + 40, this.getY() + 100);
+        super(20, 650, "resources/Player/Maria/maria-still.png"
+                , "resources/Player/Maria/maria-shooting.png"
+                , new MariaBullet(20 + 40, 650 + 100));
+
     }
 
     @Override
-    public void standardFace() {
-        maria.load("resources/Player/Maria/maria-still.png");
+    public void init() {
+        normalFace.draw();
+    }
+
+    @Override
+    public void moveUp() {
+        normalFace.translate(0, 320);
+        shootingFace.translate(0, 320);
+    }
+
+    @Override
+    public void moveDown() {
+        normalFace.translate(0, 320);
+        shootingFace.translate(0, 320);
     }
 
     @Override
     public void shootingFace() {
-        maria.load("resources/Player/Maria/maria-shooting.png");
+        normalFace.delete();
+        shootingFace.translate(normalFace.getX(), normalFace.getY());
+        shootingFace.draw();
+
+        new Thread(() -> {
+
+            try {
+                Thread.sleep(200);
+
+            } catch (InterruptedException e) {
+
+            }
+
+            shootingFace.delete();
+            normalFace.delete();
+
+        }).start();
+    }
+
+    @Override
+    public int getX() {
+        return normalFace.getX();
+    }
+
+    @Override
+    public int getY() {
+        return normalFace.getY();
+    }
+
+    @Override
+    public void delete() {
+        normalFace.delete();
+        shootingFace.delete();
     }
 }

@@ -4,26 +4,16 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Rolo extends Enemy {
 
-    private Picture rolo;
     private boolean dead;
 
     public Rolo() {
-        rolo = new Picture(1000, 650, "resources/Enemies/Rolo/rolo-alive.png");
+        super(1000, (int) (Math.random()) * 700, "resources/Enemies/Rolo/rolo-alive.png");
         dead = false;
-    }
-
-    public void init() {
-        rolo.draw();
-    }
-
-    @Override
-    public boolean isDead() {
-        return dead;
     }
 
     @Override
     public void die() {
-        rolo.load("resources/Enemies/Rolo/rolo-dead.png");
-        dead = true;
+        enemie.load("resources/Enemies/Rolo/rolo-dead.png");
+        super.die();
     }
 }

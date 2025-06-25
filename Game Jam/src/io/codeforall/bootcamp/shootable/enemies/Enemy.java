@@ -6,12 +6,12 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Enemy implements Target {
 
-    private Picture enemie;
+    protected Picture enemie;
     private boolean dead;
     private CollisionDetector collisionDetector;
 
-    public Enemy() {
-        super();
+    public Enemy(int x, int y, String src) {
+        this.enemie = new Picture(x, y, src);
         dead = false;
     }
 

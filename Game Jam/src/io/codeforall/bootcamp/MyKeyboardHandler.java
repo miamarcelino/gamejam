@@ -15,9 +15,18 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 
+import java.lang.classfile.instruction.NewMultiArrayInstruction;
+
 
 public class MyKeyboardHandler implements KeyboardHandler {
 
+    private enum GameState {
+        START_SCREEN,
+        CHOOSE_PLAYER,
+        PLAY_AREA;
+    }
+
+    private GameState gameState = GameState.START_SCREEN;
     private Keyboard keyboard;
     private Bullet myBullet;
     private Target myTarget;
@@ -81,7 +90,7 @@ public class MyKeyboardHandler implements KeyboardHandler {
             case KeyboardEvent.KEY_SPACE:
 
                 // Only start the thread if it hasn't been started yet
-                if (!pressedSpace) {
+                if (gameState == GameState.START_SCREEN && !pressedSpace) {
                     System.out.println("Pressed space, starting thread...");
 
                     mySC.delete();  // Deletes Starting Screen
@@ -93,43 +102,76 @@ public class MyKeyboardHandler implements KeyboardHandler {
                     pressedSpace = true;
                     chosen = false;
 
+                    gameState = GameState.CHOOSE_PLAYER;
+
                 } else {
                     System.out.println("Space Key already pressed. Thread running...");
                 }
                 break;
 
             case KeyboardEvent.KEY_1:
-                if (!chosen) {
-                    myPlayer = new Daniel();
-                    myBullet = myPlayer.getBullet();
-                    //myBullet = new DanielBullet(myPlayer.getX() + 40, myPlayer.getY() + 100);
+                if (gameState == GameState.CHOOSE_PLAYER && !chosen) {
+                    System.out.println("KEY 1 pressed");
+                    try {
+                        myPlayer = new Daniel();
+                        System.out.println("Daniel created");
+                        myBullet = new DanielBullet(myPlayer.getX() + 40, myPlayer.getY() + 100);
+                        myPlayer.setBullet(myBullet);
+                        System.out.println("Bullet created");
 
-                    // Stops the flashingThread if another key is pressed
-                    myCP.stopFlashingEffect();
-                    myCP.delete();
+                        // Stops the flashingThread if another key is pressed
+                        myCP.stopFlashingEffect();
+                        myCP.delete();
+                        System.out.println("ChoosePlayer deleted");
 
-                    myPlayArea.setMyPlayer(myPlayer);
-                    setMyPlayer(myPlayer);
-                    setMyBullet(myBullet);
+                        Thread.sleep(100);
 
-                    myPlayArea.load();
-                    myPlayArea.setMyCollisionDetector(myBullet, this);
-                    System.out.println("Showing PlayArea");
-                    myPlayArea.show();
-                    myPlayer.init();
+                        myPlayArea.setMyPlayer(myPlayer);
+                        System.out.println("Player set on PlayArea");
 
-                    myPlayArea.startGameLoop();
+                        setMyPlayer(myPlayer);
+                        setMyBullet(myBullet);
+                        myPlayArea.setMyBullet(myBullet);
+                        System.out.println("Handler player/bullet set");
 
-                    chosen = true;
-                    canShoot = true;
+                        myPlayArea.load();
+                        System.out.println("PlayArea.load() complete");
+
+                        myPlayArea.setMyCollisionDetector(myBullet, this);
+                        System.out.println("Collision detector set");
+
+                        System.out.println("Showing PlayArea");
+                        myPlayArea.show();
+
+                        System.out.println("Calling player.init()");
+                        myPlayer.init();
+
+                        if(myBullet == null) {
+                            System.out.println("myBullet is still null before starting game loop!");
+                        }
+
+                        myPlayArea.startGameLoop();
+                        System.out.println("Game loop started");
+
+                        chosen = true;
+                        canShoot = true;
+
+                        gameState = GameState.PLAY_AREA;
+                        System.out.println("Selection complete");
+
+                    } catch (Exception e) {
+                        System.out.println("Error during player selection " + e.getMessage());
+                        e.printStackTrace();
+                    }
                 }
                 break;
 
             case KeyboardEvent.KEY_2:
-                if (!chosen) {
+                if (gameState == GameState.CHOOSE_PLAYER && !chosen) {
+                    System.out.println("KEY 2 PRESSED");
                     myPlayer = new Maria();
-                    myBullet = myPlayer.getBullet();
-                    //myBullet = new MariaBullet(myPlayer.getX() + 40, myPlayer.getY() + 100);
+                    myBullet = new MariaBullet(myPlayer.getX() + 40, myPlayer.getY() + 100 );
+                    myPlayer.setBullet(myBullet);
 
                     // Stops the flashingThread if another key is pressed
                     myCP.stopFlashingEffect();
@@ -138,6 +180,7 @@ public class MyKeyboardHandler implements KeyboardHandler {
                     myPlayArea.setMyPlayer(myPlayer);
                     setMyPlayer(myPlayer);
                     setMyBullet(myBullet);
+                    myPlayArea.setMyBullet(myBullet);
 
                     myPlayArea.load();
                     myPlayArea.setMyCollisionDetector(myBullet, this);
@@ -149,14 +192,17 @@ public class MyKeyboardHandler implements KeyboardHandler {
 
                     chosen = true;
                     canShoot = true;
+
+                    gameState = GameState.PLAY_AREA;
                 }
                 break;
 
             case KeyboardEvent.KEY_3:
-                if (!chosen) {
+                if (gameState == GameState.CHOOSE_PLAYER && !chosen) {
+                    System.out.println("KEY 3 PRESSED");
                     myPlayer = new Gustavo();
-                    myBullet = myPlayer.getBullet();
-                   // myBullet = new GustavoBullet(myPlayer.getX() + 40, myPlayer.getY() + 100);
+                    myBullet = new GustavoBullet(myPlayer.getX() + 40, myPlayer.getY() + 100 );
+                    myPlayer.setBullet(myBullet);
 
                     // Stops the flashingThread if another key is pressed
                     myCP.stopFlashingEffect();
@@ -165,6 +211,8 @@ public class MyKeyboardHandler implements KeyboardHandler {
                     myPlayArea.setMyPlayer(myPlayer);
                     setMyPlayer(myPlayer);
                     setMyBullet(myBullet);
+                    myPlayArea.setMyBullet(myBullet);
+
 
                     myPlayArea.load();
                     myPlayArea.setMyCollisionDetector(myBullet, this);
@@ -176,32 +224,43 @@ public class MyKeyboardHandler implements KeyboardHandler {
 
                     chosen = true;
                     canShoot = true;
+
+                    gameState = GameState.PLAY_AREA;
                 }
                 break;
 
             case KeyboardEvent.KEY_S:
+                if (gameState == GameState.PLAY_AREA) {
 
-                if (canShoot) {
-                    myPlayArea.keepShooting();
-                } else {
-                    myPlayArea.stopShootingThread();
+                    if (canShoot) {
+                        myPlayArea.keepShooting();
+                    } else {
+                        myPlayArea.stopShootingThread();
+                    }
+
                 }
-
                 break;
 
             case KeyboardEvent.KEY_UP:
-                if (myPlayer.canMoveUp()) {
-                    myPlayer.moveUp();
+                if (gameState == GameState.PLAY_AREA) {
+
+                    if (myPlayer.canMoveUp()) {
+                        myPlayer.moveUp();
+                    }
+
                 }
                 break;
 
             case KeyboardEvent.KEY_DOWN:
-                if (myPlayer.canMoveDown()) {
-                    myPlayer.moveDown();
+                if (gameState == GameState.PLAY_AREA) {
+
+                    if (myPlayer.canMoveDown()) {
+                        myPlayer.moveDown();
+                    }
+
                 }
                 break;
         }
-
     }
 
     @Override

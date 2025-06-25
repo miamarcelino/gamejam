@@ -4,13 +4,20 @@ import io.codeforall.bootcamp.bullets.Bullet;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public abstract class Player {
-    private Picture player;
-    protected Bullet bullet;
-    private boolean canMoveUp = true;
-    private boolean canMoveDown = false;
 
-    public Player(Picture picture) {
-        this.player = picture;
+    protected int x;
+    protected int y;
+    protected int moveAmount = 320;
+    protected Bullet bullet;
+    protected Picture normalFace;
+    protected Picture shootingFace;
+
+    public Player(int x, int y, String normalFacePath, String shootingFacePath, Bullet bullet) {
+        this.x = x;
+        this.y = y;
+        this.normalFace = new Picture(x, y, normalFacePath);
+        this.shootingFace = new Picture(x, y, shootingFacePath);
+        this.bullet = bullet;
     }
 
     public void standardFace() {
@@ -19,61 +26,78 @@ public abstract class Player {
     public void shootingFace() {
     }
 
+    public void setBullet(Bullet bullet) {
+        this.bullet = bullet;
+    }
+
     public void init() {
         System.out.println("Drawing Player at: " + getX() + ", " + getY());
-        player.draw();
+        normalFace.draw();
     }
 
     public void moveUp() {
-        player.translate(0, -320);
+        if (!canMoveUp()) {
+            return;
+        }
+        normalFace.translate(0, -moveAmount);
+        shootingFace.translate(0, -moveAmount);
+        y -= moveAmount;
         bullet.moveUp();
     }
 
     public void moveDown() {
-        player.translate(0, 320);
+        if (!canMoveDown()) {
+            return;
+        }
+        normalFace.translate(0, moveAmount);
+        shootingFace.translate(0, moveAmount);
+        y += moveAmount;
         bullet.moveDown();
     }
 
-    public void stayPut() {
-        player.translate(player.getX(), player.getY());
+    public void setShootingFace() {
+        normalFace.delete();
+        shootingFace = new Picture(x, y, "resources/Player/Daniel/daniel-shooting.png");
+        shootingFace.draw();
+
+        new Thread(() -> {
+
+            try {
+                Thread.sleep(200);
+
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            shootingFace.delete();
+            normalFace = new Picture(x, y, "resources/Player/Daniel/daniel-still.png");
+            normalFace.draw();
+
+        }).start();
     }
 
     public boolean canMoveUp() {
-        if (player.getY() < 150) {
-            canMoveUp = false;
-        } else {
-            canMoveUp = true;
-        }
-
-        return canMoveUp;
+       return y - moveAmount >= 10;
     }
 
     public boolean canMoveDown() {
-        if (player.getY() > 550) {
-            canMoveDown = false;
-        } else {
-            return canMoveDown = true;
-        }
-        return canMoveDown;
+       return y + moveAmount <= 700;
     }
 
     public int getX() {
-        return player.getX();
+        return x;
     }
 
     public int getY() {
-        return player.getY();
-    }
-
-    public void setPosition(int x, int y) {
-        player.translate(x, y);
+        return y;
     }
 
     public void delete() {
-        player.delete();
+        normalFace.delete();
+        shootingFace.delete();
     }
 
-    public Bullet getBullet(){
+    public Bullet getBullet() {
         return bullet;
     }
 }
