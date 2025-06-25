@@ -1,6 +1,7 @@
 package io.codeforall.bootcamp.players;
 
 import io.codeforall.bootcamp.bullets.Bullet;
+import io.codeforall.bootcamp.bullets.GustavoBullet;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Gustavo extends Player {
@@ -11,8 +12,8 @@ public class Gustavo extends Player {
     private boolean canMoveDown = false;
 
     public Gustavo() {
-        gustavo = new Picture(20, 650, "resources/Player/Gustavo/gustavo-still,png");
-        this.bullet = new Bullet(getX(), getY(), "resources/Bullets/bullet-gustavo.png");
+        super(new Picture(20, 650, "resources/Player/Gustavo/gustavo-still.png"));
+        this.bullet = new GustavoBullet(this.getX() + 40, this.getY() + 100);
     }
 
     @Override

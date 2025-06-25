@@ -5,24 +5,22 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public abstract class Player {
     private Picture player;
-    private Bullet bullet;
+    protected Bullet bullet;
     private boolean canMoveUp = true;
     private boolean canMoveDown = false;
 
-    public Player() {
-        player = new Picture(20, 650, "resources/Player/Daniel/daniel-still.png");
-        this.bullet =  new Bullet(getX(), getY(), "resources/Bullets/daniel-bullet.png");
+    public Player(Picture picture) {
+        this.player = picture;
     }
 
     public void standardFace() {
-        player.load("resources/Player/Daniel/daniel-still.png");
     }
 
     public void shootingFace() {
-        player.load("resources/Player/Daniel/daniel-shooting.png");
     }
 
     public void init() {
+        System.out.println("Drawing Player at: " + getX() + ", " + getY());
         player.draw();
     }
 
@@ -73,5 +71,9 @@ public abstract class Player {
 
     public void delete() {
         player.delete();
+    }
+
+    public Bullet getBullet(){
+        return bullet;
     }
 }

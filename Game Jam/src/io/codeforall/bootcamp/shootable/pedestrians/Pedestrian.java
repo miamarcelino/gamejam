@@ -12,6 +12,7 @@ public class Pedestrian implements Target {
 
     public Pedestrian() {
         super();
+        pedestrian = new Picture();
         dead = false;
     }
     @Override

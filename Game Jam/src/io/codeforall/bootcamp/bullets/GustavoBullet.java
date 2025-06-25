@@ -7,6 +7,6 @@ public class GustavoBullet extends Bullet{
     private Picture bullet;
 
     public GustavoBullet(int startX, int startY) {
-        super(startX, startY, "resources/Bullets/bullet-gustavo.png");
+        super(startX, startY, "resources/Bullets/daniel-bullet.png");
     }
 }

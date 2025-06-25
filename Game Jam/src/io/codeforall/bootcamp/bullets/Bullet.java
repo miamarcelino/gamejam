@@ -5,11 +5,16 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 public class Bullet {
 
     private Picture bullet;
+    private int startingX;
+    private int startingY;
+
     private int ammo = 0;
     private final int MAX_AMMO = 6;
     private boolean collided = false;
 
     public Bullet(int startX, int startY, String rsc) {
+        this.startingX = startX;
+        this.startingY = startY;
 
         bullet = new Picture(startX, startY, rsc);
     }
@@ -72,6 +77,18 @@ public class Bullet {
 
     public int getY() {
         return bullet.getY();
+    }
+
+    public void setStartingX(int x) {
+        int dx = x - this.startingX;        // Calculate horizontal shift
+        bullet.translate(dx, 0);        // Move Bullet accordingly
+        this.startingX = x;                 // Update internal X coordinate
+    }
+
+    public void setStartingY(int y) {
+        int dy = y - this.startingY;        // Calculate vertical shift
+        bullet.translate(0, dy);         // Move Bullet accordingly
+        this.startingY = y;                 // Update internal Y coordinate
     }
 
 }

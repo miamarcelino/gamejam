@@ -1,5 +1,7 @@
 package io.codeforall.bootcamp.screens;
 
+import io.codeforall.bootcamp.players.Maria;
+import io.codeforall.bootcamp.players.Player;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class ChoosePlayer {
@@ -19,6 +21,8 @@ public class ChoosePlayer {
     private Picture press3;
 
     private Thread flashingThread;
+
+    private Player chosenPlayer;
 
     public ChoosePlayer() {
         cp = new Picture(10, 10, "resources/Background/choose-player-screen.png");
@@ -50,6 +54,12 @@ public class ChoosePlayer {
         press1.draw();
         press2.draw();
         press3.draw();
+
+        chosenPlayer = new Maria();
+    }
+
+    public Player getChosenPlayer() {
+        return chosenPlayer;
     }
 
     public void delete() {

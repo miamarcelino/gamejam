@@ -1,8 +1,12 @@
 package io.codeforall.bootcamp;
 
 import io.codeforall.bootcamp.bullets.Bullet;
+import io.codeforall.bootcamp.bullets.DanielBullet;
+import io.codeforall.bootcamp.bullets.GustavoBullet;
+import io.codeforall.bootcamp.bullets.MariaBullet;
+import io.codeforall.bootcamp.players.*;
+import io.codeforall.bootcamp.shootable.Target;
 import io.codeforall.bootcamp.shootable.enemies.Enemy;
-import io.codeforall.bootcamp.players.Player;
 import io.codeforall.bootcamp.screens.ChoosePlayer;
 import io.codeforall.bootcamp.screens.PlayArea;
 import io.codeforall.bootcamp.screens.StartingScreen;
@@ -16,16 +20,15 @@ public class MyKeyboardHandler implements KeyboardHandler {
 
     private Keyboard keyboard;
     private Bullet myBullet;
-    private Enemy myEnemy;
+    private Target myTarget;
     private Player myPlayer;
     private StartingScreen mySC;
     private ChoosePlayer myCP;
     private PlayArea myPlayArea;
 
-    private Thread shootingThread = null;
-
     private boolean pressedSpace = false;   // To check if space key is pressed
     private boolean canShoot = false;
+    private boolean chosen = true;
 
     private String chosenPlayer = "";
 
@@ -88,34 +91,92 @@ public class MyKeyboardHandler implements KeyboardHandler {
                     myCP.startFlashingEffect();
 
                     pressedSpace = true;
+                    chosen = false;
 
                 } else {
                     System.out.println("Space Key already pressed. Thread running...");
                 }
                 break;
 
-            case KeyboardEvent.KEY_1, KeyboardEvent.KEY_2, KeyboardEvent.KEY_3:
+            case KeyboardEvent.KEY_1:
+                if (!chosen) {
+                    myPlayer = new Daniel();
+                    myBullet = myPlayer.getBullet();
+                    //myBullet = new DanielBullet(myPlayer.getX() + 40, myPlayer.getY() + 100);
 
-                // Stops the flashingThread if another key is pressed
-                myCP.stopFlashingEffect();
-                myCP.delete();
-                myPlayArea.load();
+                    // Stops the flashingThread if another key is pressed
+                    myCP.stopFlashingEffect();
+                    myCP.delete();
 
-                if (keyboardEvent.getKey() == KeyboardEvent.KEY_1) {
-                    chosenPlayer = "Daniel";
+                    myPlayArea.setMyPlayer(myPlayer);
+                    setMyPlayer(myPlayer);
+                    setMyBullet(myBullet);
 
+                    myPlayArea.load();
+                    myPlayArea.setMyCollisionDetector(myBullet, this);
+                    System.out.println("Showing PlayArea");
+                    myPlayArea.show();
+                    myPlayer.init();
 
-                } else if (keyboardEvent.getKey() == KeyboardEvent.KEY_2){
-                    chosenPlayer = "Maria";
+                    myPlayArea.startGameLoop();
 
-
-                } else if (keyboardEvent.getKey() == KeyboardEvent.KEY_3) {
-                    chosenPlayer = "Gustavo";
-
+                    chosen = true;
+                    canShoot = true;
                 }
+                break;
 
-                canShoot = true;
+            case KeyboardEvent.KEY_2:
+                if (!chosen) {
+                    myPlayer = new Maria();
+                    myBullet = myPlayer.getBullet();
+                    //myBullet = new MariaBullet(myPlayer.getX() + 40, myPlayer.getY() + 100);
 
+                    // Stops the flashingThread if another key is pressed
+                    myCP.stopFlashingEffect();
+                    myCP.delete();
+
+                    myPlayArea.setMyPlayer(myPlayer);
+                    setMyPlayer(myPlayer);
+                    setMyBullet(myBullet);
+
+                    myPlayArea.load();
+                    myPlayArea.setMyCollisionDetector(myBullet, this);
+                    System.out.println("Showing PlayArea");
+                    myPlayArea.show();
+                    myPlayer.init();
+
+                    myPlayArea.startGameLoop();
+
+                    chosen = true;
+                    canShoot = true;
+                }
+                break;
+
+            case KeyboardEvent.KEY_3:
+                if (!chosen) {
+                    myPlayer = new Gustavo();
+                    myBullet = myPlayer.getBullet();
+                   // myBullet = new GustavoBullet(myPlayer.getX() + 40, myPlayer.getY() + 100);
+
+                    // Stops the flashingThread if another key is pressed
+                    myCP.stopFlashingEffect();
+                    myCP.delete();
+
+                    myPlayArea.setMyPlayer(myPlayer);
+                    setMyPlayer(myPlayer);
+                    setMyBullet(myBullet);
+
+                    myPlayArea.load();
+                    myPlayArea.setMyCollisionDetector(myBullet, this);
+                    System.out.println("Showing PlayArea");
+                    myPlayArea.show();
+                    myPlayer.init();
+
+                    myPlayArea.startGameLoop();
+
+                    chosen = true;
+                    canShoot = true;
+                }
                 break;
 
             case KeyboardEvent.KEY_S:
@@ -152,8 +213,8 @@ public class MyKeyboardHandler implements KeyboardHandler {
         this.myBullet = myBullet;
     }
 
-    public void setMyEnemy(Enemy enemy) {
-        this.myEnemy = enemy;
+    public void setMyTarget(Target target) {
+        this.myTarget = target;
     }
 
     public void setMyPlayer(Player player) {
@@ -176,7 +237,7 @@ public class MyKeyboardHandler implements KeyboardHandler {
         this.myPlayArea = pa;
     }
 
-    public String getChosenPlayer(){
+    public String getChosenPlayer() {
         return chosenPlayer;
     }
 }

@@ -1,48 +1,55 @@
 package io.codeforall.bootcamp.screens;
 
 
+import io.codeforall.bootcamp.CollisionDetector;
 import io.codeforall.bootcamp.MyKeyboardHandler;
 import io.codeforall.bootcamp.bullets.Bullet;
+import io.codeforall.bootcamp.factories.TargetFactory;
 import io.codeforall.bootcamp.players.Daniel;
-import io.codeforall.bootcamp.players.Gustavo;
-import io.codeforall.bootcamp.players.Maria;
 import io.codeforall.bootcamp.players.Player;
-import io.codeforall.bootcamp.shootable.enemies.Enemy;
-import io.codeforall.bootcamp.shootable.enemies.EvilHitler;
+import io.codeforall.bootcamp.shootable.Target;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class PlayArea {
 
     private Picture playArea;
     private Player myPlayer;
-    private Enemy myEnemy;
+    private Target myTarget;
     private Bullet myBullet;
+
+    private Target[] targets;                           // Container of Targets
+    private CollisionDetector myCollisionDetector;      // The Collision detector
+    private int manufacturedTargets = 20;               // We start with 20 Targets
 
     private Thread shootingThread;
     private MyKeyboardHandler myKeyboardHandler;
 
     public PlayArea(MyKeyboardHandler myKeyboardHandler) {
+        this.myKeyboardHandler = myKeyboardHandler;
         playArea = new Picture(10, 10, "resources/Background/background-blueprint.png");
 
-        this.myKeyboardHandler = myKeyboardHandler;
+    }
+
+    public void setMyPlayer(Player player) {
+        this.myPlayer = player;
+    }
+
+    public void show() {
+        System.out.println("Drawing PlayArea and Player...");
+        playArea.draw();
+
+        if(myPlayer != null) {
+            myPlayer.init();
+        }
     }
 
     public void load() {
-        switch (myKeyboardHandler.getChosenPlayer()) {
-            case "Daniel":
-                myPlayer = new Daniel();
-                break;
+        // Prepares everything but doesn't draw
 
-            case "Maria":
-                myPlayer = new Maria();
-                break;
-
-            case "Gustavo":
-                myPlayer = new Gustavo();
-                break;
-        }
-
-        playArea.draw();
+        targets = new Target[manufacturedTargets];
+        myKeyboardHandler.setMyPlayer(myPlayer);
+        spawnEnemies();
+        myKeyboardHandler.setMyTarget(myTarget);
     }
 
     public void delete() {
@@ -52,12 +59,12 @@ public class PlayArea {
     public void keepShooting() {
         shootingThread = new Thread(() -> {
 
-            myBullet = new Bullet(myPlayer.getX() + 40, myPlayer.getY() + 100,
-                    "resources/Bullets/daniel-bullet.png");
+           myBullet.setStartingX(myPlayer.getX() + 40);
+           myBullet.setStartingY(myPlayer.getY() + 100);
 
             myBullet.initBullet();
             myPlayer.shootingFace();
-            System.out.println("Entrei aqui");
+            System.out.println("Started shooting...");
 
             for (int i = 0; i < myBullet.getMaxAmmo(); i++) {
                 myBullet.shootBullet();
@@ -70,17 +77,66 @@ public class PlayArea {
                 }
             }
             myBullet.deleteBullet();
-            myEnemy.die();
             myPlayer.standardFace();
-            System.out.println("Sai aqui");
+            System.out.println("Finished shooting...");
         });
         shootingThread.start();
     }
 
     public void stopShootingThread() {
-        if(shootingThread != null && shootingThread.isAlive()){
+        if (shootingThread != null && shootingThread.isAlive()) {
             shootingThread.interrupt();
             myBullet.deleteBullet();
         }
+    }
+
+    public void spawnEnemies() {
+        for (int i = 0; i < manufacturedTargets; i++) {
+            Target t = TargetFactory.getNewTarget();
+
+            if(t != null) {
+                t.setCollisionDetector(myCollisionDetector);
+                t.init();
+                targets[i] = t;
+
+            } else {
+                System.out.println("TargetFactory returned null at index " + i);
+            }
+        }
+    }
+
+    public void spawnAllEnemies() {
+        for (Target t : targets) {
+            spawnEnemies();
+            myCollisionDetector.check();
+        }
+    }
+
+    public void setMyCollisionDetector(Bullet bullet, MyKeyboardHandler keyboardHandler) {
+        this.myBullet = bullet;
+        this.myCollisionDetector = new CollisionDetector(bullet, targets, keyboardHandler);
+
+        for(Target t: targets) {
+            if(t != null) {
+                t.setCollisionDetector(myCollisionDetector);
+            }
+        }
+    }
+
+    public void startGameLoop() {
+        new Thread(() -> {
+            while(true) {
+                if(myCollisionDetector != null) {
+                    myCollisionDetector.check();
+                }
+
+                try {
+                    Thread.sleep(50); // Checks collisions every 50ms
+
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+        }).start();
     }
 }

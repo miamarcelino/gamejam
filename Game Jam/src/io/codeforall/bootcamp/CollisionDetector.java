@@ -7,10 +7,14 @@ public class CollisionDetector {
 
     private Bullet bullet;
     private Target[] targets;
+    private MyKeyboardHandler keyboardHandler;
 
-    public CollisionDetector(Bullet bullet, Target[] targets) {
+    public CollisionDetector(Bullet bullet, Target[] targets, MyKeyboardHandler keyboardHandler) {
         this.bullet = bullet;
         this.targets = targets;
+        this.keyboardHandler = keyboardHandler;
+
+        keyboardHandler.setMyBullet(bullet);
     }
 
     /**

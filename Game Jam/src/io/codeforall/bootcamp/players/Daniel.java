@@ -1,6 +1,7 @@
 package io.codeforall.bootcamp.players;
 
 import io.codeforall.bootcamp.bullets.Bullet;
+import io.codeforall.bootcamp.bullets.DanielBullet;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Daniel extends Player {
@@ -10,9 +11,9 @@ public class Daniel extends Player {
     private boolean canMoveUp = true;
     private boolean canMoveDown = false;
 
-    public Daniel(){
-        daniel = new Picture(20, 650, "resources/Player/Daniel/daniel-still.png");
-        this.bullet = new Bullet(getX(), getY(), "resources/Bullets/daniel-bullet.png");
+    public Daniel() {
+        super(new Picture(20, 650, "resources/Player/Daniel/daniel-still.png"));
+        this.bullet = new DanielBullet(this.getX() + 40, this.getY() + 100);
     }
 
     @Override
@@ -21,7 +22,7 @@ public class Daniel extends Player {
     }
 
     @Override
-    public void shootingFace(){
+    public void shootingFace() {
         daniel.load("resources/Player/Daniel/daniel-shooting.png");
     }
 }
