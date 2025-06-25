@@ -1,5 +1,6 @@
 package io.codeforall.bootcamp.shootable.pedestrians;
 
+import io.codeforall.bootcamp.CollisionDetector;
 import io.codeforall.bootcamp.shootable.Target;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -7,6 +8,7 @@ public class Pedestrian implements Target {
 
     private Picture pedestrian;
     private boolean dead;
+    private CollisionDetector collisionDetector;
 
     public Pedestrian() {
         super();
@@ -40,5 +42,10 @@ public class Pedestrian implements Target {
     @Override
     public boolean isDead() {
         return dead;
+    }
+
+    @Override
+    public void setCollisionDetector(CollisionDetector myCollisionDetector) {
+        this.collisionDetector = myCollisionDetector;
     }
 }

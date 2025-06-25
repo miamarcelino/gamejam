@@ -4,56 +4,74 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Bullet {
 
-	private Picture bullet;
-	private int ammo = 0;
-	private final int MAX_AMMO = 6;
+    private Picture bullet;
+    private int ammo = 0;
+    private final int MAX_AMMO = 6;
+    private boolean collided = false;
 
-	public Bullet(int startX, int startY, String rsc){
+    public Bullet(int startX, int startY, String rsc) {
 
-		bullet = new Picture(startX, startY, rsc);
-	}
+        bullet = new Picture(startX, startY, rsc);
+    }
 
-	public void initBullet(){
-		bullet.draw();
-	}
+    public void initBullet() {
+        bullet.draw();
+    }
 
-	public int getMaxAmmo(){
-		return MAX_AMMO;
-	}
+    public int getMaxAmmo() {
+        return MAX_AMMO;
+    }
 
-	public int getAmmo(){
-		return ammo;
-	}
+    public int getAmmo() {
+        return ammo;
+    }
 
-	public void setAmmo(int ammo){
-		this.ammo = ammo;
-	}
+    public void setAmmo(int ammo) {
+        this.ammo = ammo;
+    }
 
-	public boolean hasAmmo(){
-		return ammo == MAX_AMMO;
-	}
+    public boolean hasAmmo() {
+        return ammo == MAX_AMMO;
+    }
 
-	public void shootBullet(){
+    public boolean isCollided() {
+        return collided;
+    }
+
+    public void setCollided() {
+        collided = true;
+    }
 
 
-		if (getAmmo() < getMaxAmmo()) {
-			bullet.translate(180, 0);
+    public void shootBullet() {
 
-			setAmmo(getAmmo());
-		}
-	}
 
-	public void deleteBullet(){
-		bullet.delete();
-		setAmmo(0);
-	}
+        if (getAmmo() < getMaxAmmo()) {
+            bullet.translate(180, 0);
 
-	public void moveUp(){
-		bullet.translate(0, -400);
-	}
+            setAmmo(getAmmo());
+        }
+    }
 
-	public void moveDown(){
-		bullet.translate(0, 400);
-	}
+    public void deleteBullet() {
+        bullet.delete();
+        setAmmo(0);
+    }
+
+    public void moveUp() {
+        bullet.translate(0, -400);
+    }
+
+    public void moveDown() {
+        bullet.translate(0, 400);
+    }
+
+    public int getMaxX() {
+        return bullet.getMaxX();
+    }
+
+    public int getY() {
+        return bullet.getY();
+    }
 
 }

@@ -3,7 +3,7 @@ package io.codeforall.bootcamp.players;
 import io.codeforall.bootcamp.bullets.Bullet;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-public class Player {
+public abstract class Player {
     private Picture player;
     private Bullet bullet;
     private boolean canMoveUp = true;

@@ -1,5 +1,6 @@
 package io.codeforall.bootcamp.shootable.bonus;
 
+import io.codeforall.bootcamp.CollisionDetector;
 import io.codeforall.bootcamp.shootable.Target;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -7,6 +8,7 @@ public class Elias implements Target {
 
     private Picture elias;
     private boolean dead;
+    private CollisionDetector collisionDetector;
 
     public Elias() {
         super();
@@ -62,6 +64,11 @@ public class Elias implements Target {
     @Override
     public boolean isDead() {
         return dead;
+    }
+
+    @Override
+    public void setCollisionDetector(CollisionDetector myCollisionDetector) {
+        this.collisionDetector = myCollisionDetector;
     }
 
     private void delayMethod(int ms) {

@@ -1,5 +1,7 @@
 package io.codeforall.bootcamp.shootable;
 
+import io.codeforall.bootcamp.CollisionDetector;
+
 public interface Target {
 
     public void init();
@@ -13,5 +15,7 @@ public interface Target {
     public int getY();
 
     boolean isDead();
+
+    void setCollisionDetector(CollisionDetector myCollisionDetector);
 }
 

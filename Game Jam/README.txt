@@ -18,12 +18,3 @@ HOW TO PLAY THE GAME:
 
     Kill as many enemies as possible under 1 minute
     If you shoot 3 pedestrians ----> GAME OVER
-
-
-Maria:
-
-    Fazer subClasses da Bullet, dos Enemy e dos Player
-
-
-
-

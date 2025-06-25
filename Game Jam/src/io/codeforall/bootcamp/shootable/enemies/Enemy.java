@@ -1,5 +1,6 @@
 package io.codeforall.bootcamp.shootable.enemies;
 
+import io.codeforall.bootcamp.CollisionDetector;
 import io.codeforall.bootcamp.shootable.Target;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -7,6 +8,7 @@ public class Enemy implements Target {
 
     private Picture enemie;
     private boolean dead;
+    private CollisionDetector collisionDetector;
 
     public Enemy() {
         super();
@@ -42,6 +44,11 @@ public class Enemy implements Target {
 
     public boolean isDead() {
         return dead;
+    }
+
+    @Override
+    public void setCollisionDetector(CollisionDetector myCollisionDetector) {
+        this.collisionDetector = myCollisionDetector;
     }
 
 }

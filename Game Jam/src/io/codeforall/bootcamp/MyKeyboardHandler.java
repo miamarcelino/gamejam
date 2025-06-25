@@ -1,9 +1,6 @@
 package io.codeforall.bootcamp;
 
 import io.codeforall.bootcamp.bullets.Bullet;
-import io.codeforall.bootcamp.players.Daniel;
-import io.codeforall.bootcamp.players.Gustavo;
-import io.codeforall.bootcamp.players.Maria;
 import io.codeforall.bootcamp.shootable.enemies.Enemy;
 import io.codeforall.bootcamp.players.Player;
 import io.codeforall.bootcamp.screens.ChoosePlayer;
@@ -29,6 +26,8 @@ public class MyKeyboardHandler implements KeyboardHandler {
 
     private boolean pressedSpace = false;   // To check if space key is pressed
     private boolean canShoot = false;
+
+    private String chosenPlayer = "";
 
     public void init() {
 
@@ -103,16 +102,16 @@ public class MyKeyboardHandler implements KeyboardHandler {
                 myPlayArea.load();
 
                 if (keyboardEvent.getKey() == KeyboardEvent.KEY_1) {
-                    myPlayer = new Daniel();
-                    myPlayer.init();
+                    chosenPlayer = "Daniel";
+
 
                 } else if (keyboardEvent.getKey() == KeyboardEvent.KEY_2){
-                    myPlayer = new Maria();
-                    myPlayer.init();
+                    chosenPlayer = "Maria";
+
 
                 } else if (keyboardEvent.getKey() == KeyboardEvent.KEY_3) {
-                    myPlayer = new Gustavo();
-                    myPlayer.init();
+                    chosenPlayer = "Gustavo";
+
                 }
 
                 canShoot = true;
@@ -175,5 +174,9 @@ public class MyKeyboardHandler implements KeyboardHandler {
 
     public void setMyPlayArea(PlayArea pa) {
         this.myPlayArea = pa;
+    }
+
+    public String getChosenPlayer(){
+        return chosenPlayer;
     }
 }
