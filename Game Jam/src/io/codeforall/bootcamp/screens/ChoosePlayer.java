@@ -18,6 +18,7 @@ public class ChoosePlayer {
     private Picture press2;
     private Picture press3;
 
+    private Thread flashingThread;
 
     public ChoosePlayer() {
         cp = new Picture(10, 10, "resources/Background/choose-player-screen.png");
@@ -67,33 +68,52 @@ public class ChoosePlayer {
         press3.delete();
     }
 
-    public void flashingHeads(int ms) {
-        for (int i = 0; i < 20; i++) {
-            delayImage(ms);
-            daniel.draw();
-            maria.draw();
-            gustavo.draw();
-
-            delayImage(ms);
-            daniel.delete();
-            maria.delete();
-            gustavo.delete();
-
-        }
-
+    public void drawFaces() {
         daniel.draw();
         maria.draw();
         gustavo.draw();
     }
 
-    private void delayImage(int ms) {
-        while (!Thread.currentThread().isInterrupted()) {
-            try {
-                Thread.sleep(ms);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                break;
+    public void deleteFaces() {
+        daniel.delete();
+        maria.delete();
+        gustavo.delete();
+    }
+
+    public void startFlashingEffect() {
+        flashingThread = new Thread(() -> {
+            int counter = 0;
+
+            while (counter < 50) {
+                drawFaces(); // Draw all faces
+
+                try {
+                    Thread.sleep(300); // Flash duration
+
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+                deleteFaces(); // Hide faces
+
+                try {
+                    Thread.sleep(300);
+
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
+                counter++;
             }
+        });
+        flashingThread.start();
+    }
+
+    //Stop the flashing effect by interrupting the thread
+    public void stopFlashingEffect() {
+        if(flashingThread != null && flashingThread.isAlive()) {
+            flashingThread.interrupt();
+            drawFaces();
         }
     }
 }

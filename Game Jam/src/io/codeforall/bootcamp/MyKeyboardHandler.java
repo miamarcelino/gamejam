@@ -1,6 +1,9 @@
 package io.codeforall.bootcamp;
 
 import io.codeforall.bootcamp.bullets.Bullet;
+import io.codeforall.bootcamp.players.Daniel;
+import io.codeforall.bootcamp.players.Gustavo;
+import io.codeforall.bootcamp.players.Maria;
 import io.codeforall.bootcamp.shootable.enemies.Enemy;
 import io.codeforall.bootcamp.players.Player;
 import io.codeforall.bootcamp.screens.ChoosePlayer;
@@ -22,8 +25,10 @@ public class MyKeyboardHandler implements KeyboardHandler {
     private ChoosePlayer myCP;
     private PlayArea myPlayArea;
 
-    private boolean pressedSpace = false;
-    private Thread flashingThread = null;
+    private Thread shootingThread = null;
+
+    private boolean pressedSpace = false;   // To check if space key is pressed
+    private boolean canShoot = false;
 
     public void init() {
 
@@ -66,79 +71,63 @@ public class MyKeyboardHandler implements KeyboardHandler {
         keyboard.addEventListener(downKey);
     }
 
-
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
 
         switch (keyboardEvent.getKey()) {
 
             case KeyboardEvent.KEY_SPACE:
-                if (!pressedSpace) {
-                    mySC.delete();
-                    myCP.load();
 
-                    // Start the flashing thread if it's not already running
-                    flashingThread = new Thread(() -> {
-                        myCP.flashingHeads(300);
-                    });
-                    flashingThread.start();
+                // Only start the thread if it hasn't been started yet
+                if (!pressedSpace) {
+                    System.out.println("Pressed space, starting thread...");
+
+                    mySC.delete();  // Deletes Starting Screen
+                    myCP.load();    // Loads Choose Player Screen
+
+                    // Create and start the flashing effect
+                    myCP.startFlashingEffect();
 
                     pressedSpace = true;
+
+                } else {
+                    System.out.println("Space Key already pressed. Thread running...");
                 }
                 break;
 
-            case KeyboardEvent.KEY_1:
-                //falta por cara correspondente e dar delete
+            case KeyboardEvent.KEY_1, KeyboardEvent.KEY_2, KeyboardEvent.KEY_3:
 
                 // Stops the flashingThread if another key is pressed
-                if(flashingThread != null && flashingThread.isAlive()) {
-                    flashingThread.interrupt();
+                myCP.stopFlashingEffect();
+                myCP.delete();
+                myPlayArea.load();
 
-                    myCP.delete();
-                    myPlayArea.load();
+                if (keyboardEvent.getKey() == KeyboardEvent.KEY_1) {
+                    myPlayer = new Daniel();
+                    myPlayer.init();
+
+                } else if (keyboardEvent.getKey() == KeyboardEvent.KEY_2){
+                    myPlayer = new Maria();
+                    myPlayer.init();
+
+                } else if (keyboardEvent.getKey() == KeyboardEvent.KEY_3) {
+                    myPlayer = new Gustavo();
                     myPlayer.init();
                 }
-                break;
 
-            case KeyboardEvent.KEY_2:
-                myCP.delete();
-                myPlayArea.load();
-                myPlayer.init();
-                break;
+                canShoot = true;
 
-            case KeyboardEvent.KEY_3:
-                myCP.delete();
-                myPlayArea.load();
-                myPlayer.init();
                 break;
 
             case KeyboardEvent.KEY_S:
-                new Thread(() -> {
 
-                    myBullet = new Bullet(myPlayer.getX() + 40, myPlayer.getY() + 100, "resources/Bullets/daniel-bullet.png");
-                    myPlayArea.load();
-                    myBullet.initBullet();
-                    myPlayer.shootingFace();
+                if (canShoot) {
+                    myPlayArea.keepShooting();
+                } else {
+                    myPlayArea.stopShootingThread();
+                }
 
-                    for (int i = 0; i < myBullet.getMaxAmmo(); i++) {
-                        myBullet.shootBullet();
-
-
-                        try {
-                            Thread.sleep(60);
-
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    myBullet.deleteBullet();
-                    myEnemy.die();
-                    myPlayer.standardFace();
-
-
-                }).start();
                 break;
-
 
             case KeyboardEvent.KEY_UP:
                 if (myPlayer.canMoveUp()) {

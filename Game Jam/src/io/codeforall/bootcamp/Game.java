@@ -1,6 +1,7 @@
 package io.codeforall.bootcamp;
 
 import io.codeforall.bootcamp.bullets.Bullet;
+import io.codeforall.bootcamp.shootable.bonus.Elias;
 import io.codeforall.bootcamp.shootable.enemies.Enemy;
 import io.codeforall.bootcamp.shootable.enemies.EvilHitler;
 import io.codeforall.bootcamp.players.Player;

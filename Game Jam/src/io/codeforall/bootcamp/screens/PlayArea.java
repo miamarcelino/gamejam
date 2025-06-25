@@ -14,6 +14,8 @@ public class PlayArea {
     private Enemy myEnemy;
     private Bullet myBullet;
 
+    private Thread shootingThread;
+
     public PlayArea() {
         playArea = new Picture(10, 10, "resources/Background/background-blueprint.png");
     }
@@ -28,5 +30,38 @@ public class PlayArea {
 
     public void delete() {
         playArea.delete();
+    }
+
+    public void keepShooting() {
+        shootingThread = new Thread(() -> {
+
+            myBullet = new Bullet(myPlayer.getX() + 40, myPlayer.getY() + 100,
+                    "resources/Bullets/daniel-bullet.png");
+
+            myBullet.initBullet();
+            myPlayer.shootingFace();
+
+            for (int i = 0; i < myBullet.getMaxAmmo(); i++) {
+                myBullet.shootBullet();
+
+                try {
+                    Thread.sleep(50);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            myBullet.deleteBullet();
+            myEnemy.die();
+            myPlayer.standardFace();
+        });
+        shootingThread.start();
+    }
+
+    public void stopShootingThread() {
+        if(shootingThread != null && shootingThread.isAlive()){
+            shootingThread.interrupt();
+            myBullet.deleteBullet();
+        }
     }
 }

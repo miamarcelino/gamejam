@@ -1,8 +1,6 @@
 package io.codeforall.bootcamp.bullets;
 
-
 import org.academiadecodigo.simplegraphics.pictures.Picture;
-
 
 public class Bullet {
 
@@ -36,6 +34,8 @@ public class Bullet {
 	}
 
 	public void shootBullet(){
+
+
 		if (getAmmo() < getMaxAmmo()) {
 			bullet.translate(180, 0);
 
