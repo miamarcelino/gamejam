@@ -17,9 +17,9 @@ public class Game {
         keyboardHandler = new MyKeyboardHandler();
 
         pa = new PlayArea(keyboardHandler);
-        //pa.load();
+
         cp = new ChoosePlayer();
-        cp.load();
+
         sc = new StartingScreen();
         sc.load();
 

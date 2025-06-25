@@ -13,10 +13,11 @@ public class Maria extends Player {
     private boolean canMoveDown = false;
 
     public Maria() {
-        super(20, 650, "resources/Player/Maria/maria-still.png"
-                , "resources/Player/Maria/maria-shooting.png"
-                , new MariaBullet(20 + 40, 650 + 100));
+        super(20, 650);
 
+        this.normalFace = new Picture(20, 650, "resources/Player/Maria/maria-still.png");
+        this.shootingFace = new Picture(20, 650, "resources/Player/Maria/maria-shooting.png");
+        this.bullet = new MariaBullet(20 + 40, 650 + 100);
     }
 
     @Override
@@ -39,7 +40,10 @@ public class Maria extends Player {
     @Override
     public void shootingFace() {
         normalFace.delete();
-        shootingFace.translate(normalFace.getX(), normalFace.getY());
+        shootingFace.translate(
+                normalFace.getX() - shootingFace.getX(),
+                normalFace.getY() - shootingFace.getY());
+
         shootingFace.draw();
 
         new Thread(() -> {
@@ -52,7 +56,7 @@ public class Maria extends Player {
             }
 
             shootingFace.delete();
-            normalFace.delete();
+            normalFace.draw();
 
         }).start();
     }

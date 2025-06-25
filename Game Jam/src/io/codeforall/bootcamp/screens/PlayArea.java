@@ -57,10 +57,12 @@ public class PlayArea {
     }
 
     public void keepShooting() {
+        stopShootingThread();           // Prevents multiple threads
+
         shootingThread = new Thread(() -> {
 
             if(myBullet == null) {
-                System.out.println("myBullet is null in keepShoting()");
+                System.out.println("myBullet is null in keepShooting()");
                 return;
             }
            myBullet.setStartingX(myPlayer.getX() + 40);
@@ -81,7 +83,6 @@ public class PlayArea {
                 }
             }
             myBullet.deleteBullet();
-            myPlayer.standardFace();
             System.out.println("Finished shooting...");
         });
         shootingThread.start();

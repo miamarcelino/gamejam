@@ -55,7 +55,6 @@ public class ChoosePlayer {
         press2.draw();
         press3.draw();
 
-        chosenPlayer = new Maria();
     }
 
     public Player getChosenPlayer() {
