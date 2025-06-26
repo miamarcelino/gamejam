@@ -5,7 +5,6 @@ import io.codeforall.bootcamp.CollisionDetector;
 import io.codeforall.bootcamp.MyKeyboardHandler;
 import io.codeforall.bootcamp.bullets.Bullet;
 import io.codeforall.bootcamp.factories.TargetFactory;
-import io.codeforall.bootcamp.players.Daniel;
 import io.codeforall.bootcamp.players.Player;
 import io.codeforall.bootcamp.shootable.Target;
 import org.academiadecodigo.simplegraphics.pictures.Picture;

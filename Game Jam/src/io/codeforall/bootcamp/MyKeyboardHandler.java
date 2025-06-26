@@ -33,7 +33,6 @@ public class MyKeyboardHandler implements KeyboardHandler {
     private PlayArea myPlayArea;
 
     private boolean pressedSpace = false;   // To check if space key is pressed
-    private boolean canShoot = false;
     private boolean chosen = true;
 
     private String chosenPlayer = "";
@@ -151,7 +150,6 @@ public class MyKeyboardHandler implements KeyboardHandler {
                         System.out.println("Game loop started");
 
                         chosen = true;
-                        canShoot = true;
 
                         gameState = GameState.PLAY_AREA;
                         System.out.println("Selection complete");
@@ -188,7 +186,6 @@ public class MyKeyboardHandler implements KeyboardHandler {
                     myPlayArea.startGameLoop();
 
                     chosen = true;
-                    canShoot = true;
 
                     gameState = GameState.PLAY_AREA;
                 }
@@ -220,7 +217,6 @@ public class MyKeyboardHandler implements KeyboardHandler {
                     myPlayArea.startGameLoop();
 
                     chosen = true;
-                    canShoot = true;
 
                     gameState = GameState.PLAY_AREA;
                 }
@@ -229,13 +225,8 @@ public class MyKeyboardHandler implements KeyboardHandler {
             case KeyboardEvent.KEY_S:
                 if (gameState == GameState.PLAY_AREA) {
 
-                    if (canShoot) {
                         myPlayArea.keepShooting();
-                        canShoot = false;
-                    } else {
                         myPlayArea.stopShootingThread();
-                    }
-
                 }
                 break;
 
