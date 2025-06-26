@@ -52,7 +52,10 @@ public class Enemy implements Target {
 
             // Notify via CollisionDetector -> PlayArea
             if(collisionDetector != null) {
+                System.out.println("Notifying PlayArea enemy died...");
                 collisionDetector.notifyPlayAreaEnemyDied();
+            } else {
+                System.out.println("Collision Detector was null");
             }
         }).start();
     }

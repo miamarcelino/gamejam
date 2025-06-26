@@ -52,6 +52,7 @@ public class CollisionDetector {
         if (intersect) {
             bullet.setCollided(true);
             currentTarget.die();
+            notifyPlayAreaEnemyDied();
         }
     }
 

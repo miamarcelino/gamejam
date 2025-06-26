@@ -115,4 +115,12 @@ public class Bullet {
         this.startingY = y;                 // Update internal Y coordinate
     }
 
+    public void reset(int x, int y) {
+        setCollided(false);
+        setAmmo(0);
+        setStartingX(x);
+        setStartingY(y);
+        initBullet();
+    }
+
 }

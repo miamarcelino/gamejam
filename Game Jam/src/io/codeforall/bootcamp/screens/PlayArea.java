@@ -46,10 +46,15 @@ public class PlayArea {
 
     public void load() {
         // Prepares everything but doesn't draw
-
         targets = new Target[manufacturedTargets];
         myKeyboardHandler.setMyPlayer(myPlayer);
+
         spawnEnemies();
+        setMyCollisionDetector(myBullet, myKeyboardHandler);
+
+        spawnNextEnemy();
+
+        myTarget = getCurrentTarget();
         myKeyboardHandler.setMyTarget(myTarget);
     }
 
@@ -58,16 +63,16 @@ public class PlayArea {
     }
 
     public void notifyEnemyDied() {
-        readyToSpawnNext = true;
         currentTargetIndex++;
+        readyToSpawnNext = true;
     }
 
     public void keepShooting() {
 
         Bullet bullet = myPlayer.createBullet();  // Player decides what bullet it fires
-        bullet.setCollided(false);
-        bullet.setStartingX(myPlayer.getX() + 40);
-        bullet.setStartingY(myPlayer.getY() + 100);
+//        bullet.setCollided(false);
+        bullet.reset(myPlayer.getX() + 40, myPlayer.getY() + 100);
+
         bullet.initBullet();
         myPlayer.shootingFace();
 
@@ -118,19 +123,23 @@ public class PlayArea {
     }
 
     public void spawnNextEnemy() {
-        while (currentTargetIndex < targets.length) {
-            Target t = targets[currentTargetIndex];
 
-            if (t != null && !t.isDead()) {
-                t.init();
-                System.out.println("Spawned Target!!");
-                //currentTargetIndex++;
-                return;
+        if (currentTargetIndex >= targets.length) {
+            System.out.println("All targets spawned or dead");
+            return;
+        }
 
-            }
+        Target t = targets[currentTargetIndex];
 
-            // If null or dead, move to next
-            System.out.println("No more targets to spawn!");
+        if (t != null && !t.isDead()) {
+            t.init();
+            System.out.println("Spawned Target!!");
+
+            myTarget = t;
+            myKeyboardHandler.setMyTarget(myTarget);
+
+        } else {
+            System.out.println("Target at index " + currentTargetIndex + " is null or already dead");
         }
     }
 
@@ -172,7 +181,8 @@ public class PlayArea {
     }
 
     public Target getCurrentTarget() {
-        if (currentTargetIndex < targets.length) {
+
+        if (currentTargetIndex < targets.length && currentTargetIndex >= 0) {
             return targets[currentTargetIndex];
         }
         return null;
