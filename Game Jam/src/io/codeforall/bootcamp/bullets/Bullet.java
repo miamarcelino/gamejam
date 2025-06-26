@@ -47,8 +47,8 @@ public class Bullet {
         return collided;
     }
 
-    public void setCollided() {
-        collided = true;
+    public void setCollided(boolean collided) {
+        this.collided = collided;
     }
 
 

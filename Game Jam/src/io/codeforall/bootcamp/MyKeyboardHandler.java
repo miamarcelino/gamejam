@@ -138,6 +138,7 @@ public class MyKeyboardHandler implements KeyboardHandler {
 
                         System.out.println("Showing PlayArea");
                         myPlayArea.show();
+                        myPlayArea.spawnNextEnemy();
 
                         System.out.println("Calling player.init()");
                         myPlayer.init();
@@ -179,8 +180,10 @@ public class MyKeyboardHandler implements KeyboardHandler {
 
                     myPlayArea.load();
                     myPlayArea.setMyCollisionDetector(myBullet, this);
+
                     System.out.println("Showing PlayArea");
                     myPlayArea.show();
+                    myPlayArea.spawnNextEnemy();
                     myPlayer.init();
 
                     myPlayArea.startGameLoop();
@@ -210,8 +213,10 @@ public class MyKeyboardHandler implements KeyboardHandler {
 
                     myPlayArea.load();
                     myPlayArea.setMyCollisionDetector(myBullet, this);
+
                     System.out.println("Showing PlayArea");
                     myPlayArea.show();
+                    myPlayArea.spawnNextEnemy();
                     myPlayer.init();
 
                     myPlayArea.startGameLoop();
@@ -287,5 +292,9 @@ public class MyKeyboardHandler implements KeyboardHandler {
 
     public String getChosenPlayer() {
         return chosenPlayer;
+    }
+
+    public PlayArea getPlayArea() {
+        return myPlayArea;
     }
 }

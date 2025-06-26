@@ -28,8 +28,33 @@ public class Enemy implements Target {
 
     @Override
     public void die() {
-        enemie.load("resources/Enemies/evil_hitler_dead.png");
+        if(dead) {
+            return;
+        }
+
         dead = true;
+
+        enemie.load("resources/Enemies/evil_hitler_dead.png");
+        enemie.draw();
+
+        new Thread(() -> {
+
+            try {
+                Thread.sleep(1000);
+
+            } catch (InterruptedException e) {
+                System.out.println("Enemy is dead ...");
+                e.printStackTrace();
+                return;
+            }
+
+            enemie.delete();
+
+            // Notify via CollisionDetector -> PlayArea
+            if(collisionDetector != null) {
+                collisionDetector.notifyPlayAreaEnemyDied();
+            }
+        }).start();
     }
 
     @Override

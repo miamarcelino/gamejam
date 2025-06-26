@@ -1,18 +1,19 @@
 package io.codeforall.bootcamp;
 
 import io.codeforall.bootcamp.bullets.Bullet;
+import io.codeforall.bootcamp.screens.PlayArea;
 import io.codeforall.bootcamp.shootable.Target;
 
 public class CollisionDetector {
 
     private Bullet bullet;
-    private Target[] targets;
+    private PlayArea playArea;
     private MyKeyboardHandler keyboardHandler;
 
-    public CollisionDetector(Bullet bullet, Target[] targets, MyKeyboardHandler keyboardHandler) {
+    public CollisionDetector(Bullet bullet, PlayArea playArea, MyKeyboardHandler keyboardHandler) {
         this.bullet = bullet;
-        this.targets = targets;
         this.keyboardHandler = keyboardHandler;
+        this.playArea = playArea;
 
         keyboardHandler.setMyBullet(bullet);
     }
@@ -23,34 +24,44 @@ public class CollisionDetector {
      */
     public void check() {
 
-        if (bullet == null || bullet.isCollided()) {
-            return;
-        }
-
         int bulletX = bullet.getX();
         int bulletY = bullet.getY();
         int bulletWidth = bullet.getWidth();
         int bulletHeight = bullet.getHeight();
 
-        for (Target t : targets) {
-            if (t == null || t.isDead()) {
-                continue;
-            }
+        Target currentTarget = playArea.getCurrentTarget();
 
-            int targetX = t.getX();
-            int targetY = t.getY();
-            int targetWidth = t.getWidth();
-            int targetHeight = t.getHeight();
-
-            // If none of these is true, they must be intersecting
-            boolean intersect =
-                    !(bulletX + bulletWidth < targetX ||            // bullet is completely left of target
-                            bulletX > targetX + targetWidth ||      // bullet is completely right of target
-                            bulletY + bulletHeight < targetY ||     // bullet is completely above target
-                            bulletY > targetY + targetHeight);      // bullet is completely below target
-
-
+        if (currentTarget == null || currentTarget.isDead()) {
+            return;
         }
 
+        int targetX = currentTarget.getX();
+        int targetY = currentTarget.getY();
+        int targetWidth = currentTarget.getWidth();
+        int targetHeight = currentTarget.getHeight();
+
+
+        // If none of these is true, they must be intersecting
+        boolean intersect =
+                !(bulletX + bulletWidth < targetX ||            // bullet is completely left of target
+                        bulletX > targetX + targetWidth ||      // bullet is completely right of target
+                        bulletY + bulletHeight < targetY ||     // bullet is completely above target
+                        bulletY > targetY + targetHeight);      // bullet is completely below target
+
+
+        if (intersect) {
+            bullet.setCollided(true);
+            currentTarget.die();
+        }
+    }
+
+    public void notifyPlayAreaEnemyDied() {
+        if (keyboardHandler.getPlayArea() != null) {
+            keyboardHandler.getPlayArea().notifyEnemyDied();
+        }
+    }
+
+    public void setBullet(Bullet bullet) {
+        this.bullet = bullet;
     }
 }

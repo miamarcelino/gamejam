@@ -21,8 +21,10 @@ public class PlayArea {
     private int manufacturedTargets = 20;               // We start with 20 Targets
 
     private MyKeyboardHandler myKeyboardHandler;
+    private Thread shootingThread;
 
     private boolean readyToSpawnNext = false;           // Flag to spawn next Target
+    private int currentTargetIndex = 0;                 // Counter for targets killed
 
     public PlayArea(MyKeyboardHandler myKeyboardHandler) {
         this.myKeyboardHandler = myKeyboardHandler;
@@ -37,16 +39,8 @@ public class PlayArea {
         System.out.println("Drawing PlayArea and Player...");
         playArea.draw();
 
-        if(myPlayer != null) {
+        if (myPlayer != null) {
             myPlayer.init();
-        }
-
-        for(Target t: targets) {
-            if(t != null && !t.isDead()) {
-                t.init();
-                System.out.println("FORCE redraw: "  + t.getClass().getSimpleName() +
-                        " at X=" + t.getX() + " Y=" + t.getY());
-            }
         }
     }
 
@@ -63,9 +57,15 @@ public class PlayArea {
         playArea.delete();
     }
 
+    public void notifyEnemyDied() {
+        readyToSpawnNext = true;
+        currentTargetIndex++;
+    }
+
     public void keepShooting() {
 
         Bullet bullet = myPlayer.createBullet();  // Player decides what bullet it fires
+        bullet.setCollided(false);
         bullet.setStartingX(myPlayer.getX() + 40);
         bullet.setStartingY(myPlayer.getY() + 100);
         bullet.initBullet();
@@ -80,11 +80,13 @@ public class PlayArea {
                     break;
                 }
             }
-          //  bullet.deleteBullet();
         }).start();
+
+        myCollisionDetector.setBullet(bullet);
     }
 
     public void stopShootingThread() {
+
         if (shootingThread != null && shootingThread.isAlive()) {
             shootingThread.interrupt();
             myBullet.deleteBullet();
@@ -115,10 +117,20 @@ public class PlayArea {
         }
     }
 
-    public void spawnAllEnemies() {
-        for (Target t : targets) {
-            spawnEnemies();
-            myCollisionDetector.check();
+    public void spawnNextEnemy() {
+        while (currentTargetIndex < targets.length) {
+            Target t = targets[currentTargetIndex];
+
+            if (t != null && !t.isDead()) {
+                t.init();
+                System.out.println("Spawned Target!!");
+                //currentTargetIndex++;
+                return;
+
+            }
+
+            // If null or dead, move to next
+            System.out.println("No more targets to spawn!");
         }
     }
 
@@ -128,10 +140,10 @@ public class PlayArea {
 
     public void setMyCollisionDetector(Bullet bullet, MyKeyboardHandler keyboardHandler) {
         this.myBullet = bullet;
-        this.myCollisionDetector = new CollisionDetector(bullet, targets, keyboardHandler);
+        this.myCollisionDetector = new CollisionDetector(bullet, this, keyboardHandler);
 
-        for(Target t: targets) {
-            if(t != null) {
+        for (Target t : targets) {
+            if (t != null) {
                 t.setCollisionDetector(myCollisionDetector);
             }
         }
@@ -139,9 +151,14 @@ public class PlayArea {
 
     public void startGameLoop() {
         new Thread(() -> {
-            while(true) {
-                if(myCollisionDetector != null) {
+            while (true) {
+                if (myCollisionDetector != null) {
                     myCollisionDetector.check();
+                }
+
+                if (readyToSpawnNext) {
+                    spawnNextEnemy();
+                    readyToSpawnNext = false;
                 }
 
                 try {
@@ -152,5 +169,12 @@ public class PlayArea {
                 }
             }
         }).start();
+    }
+
+    public Target getCurrentTarget() {
+        if (currentTargetIndex < targets.length) {
+            return targets[currentTargetIndex];
+        }
+        return null;
     }
 }
