@@ -6,7 +6,6 @@ import io.codeforall.bootcamp.bullets.GustavoBullet;
 import io.codeforall.bootcamp.bullets.MariaBullet;
 import io.codeforall.bootcamp.players.*;
 import io.codeforall.bootcamp.shootable.Target;
-import io.codeforall.bootcamp.shootable.enemies.Enemy;
 import io.codeforall.bootcamp.screens.ChoosePlayer;
 import io.codeforall.bootcamp.screens.PlayArea;
 import io.codeforall.bootcamp.screens.StartingScreen;
@@ -14,8 +13,6 @@ import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
-
-import java.lang.classfile.instruction.NewMultiArrayInstruction;
 
 
 public class MyKeyboardHandler implements KeyboardHandler {
@@ -234,6 +231,7 @@ public class MyKeyboardHandler implements KeyboardHandler {
 
                     if (canShoot) {
                         myPlayArea.keepShooting();
+                        canShoot = false;
                     } else {
                         myPlayArea.stopShootingThread();
                     }

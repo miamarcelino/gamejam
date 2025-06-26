@@ -8,7 +8,7 @@ public class DanielBullet extends Bullet {
 
     public DanielBullet(int startX, int startY){
 
-        super(startX, startY, "resources/Bullets/daniel-bullet.png");
+        super(startX, startY, "resources/Bullets/bullet-daniel.png");
     }
 
 
