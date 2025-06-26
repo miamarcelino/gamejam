@@ -81,6 +81,7 @@ public class PlayArea {
                     e.printStackTrace();
                 }
             }
+            myBullet.setAmmo(0);
             myBullet.deleteBullet();
             System.out.println("Finished shooting...");
         });

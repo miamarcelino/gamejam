@@ -50,7 +50,6 @@ public class Bullet {
 
     public void shootBullet() {
 
-
         if (getAmmo() < getMaxAmmo()) {
             bullet.translate(180, 0);
 

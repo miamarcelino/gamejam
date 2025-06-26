@@ -26,10 +26,21 @@ public class Daniel extends Player {
         normalFace.draw();
     }
 
+
+    @Override
+    public boolean canMoveUp() {
+        return getY() > 10;
+    }
+
     @Override
     public void moveUp() {
-        normalFace.translate(0, 320);
-        shootingFace.translate(0, 320);
+        normalFace.translate(0, -320);
+        shootingFace.translate(0, -320);
+    }
+
+    @Override
+    public boolean canMoveDown() {
+        return getY() < 620;
     }
 
     @Override

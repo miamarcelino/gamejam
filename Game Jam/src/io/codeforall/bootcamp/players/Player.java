@@ -27,13 +27,9 @@ public abstract class Player {
 
     public abstract void shootingFace();
 
-    public boolean canMoveUp() {
-        return normalFace.getY() > 10;
-    }
+    public abstract boolean canMoveUp();
 
-    public boolean canMoveDown() {
-        return normalFace.getY() < 700;
-    }
+    public abstract boolean canMoveDown();
 
     public abstract int getX();
     public abstract int getY();
