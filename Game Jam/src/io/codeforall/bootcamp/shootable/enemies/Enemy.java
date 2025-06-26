@@ -47,6 +47,28 @@ public class Enemy implements Target {
     }
 
     @Override
+    public void setX(int x) {
+        int dx = x - enemie.getX();
+        enemie.translate(dx, 0);
+    }
+
+    @Override
+    public void setY(int y) {
+        int dy = y - enemie.getY();
+        enemie.translate(0, dy);
+    }
+
+    @Override
+    public int getWidth() {
+        return enemie.getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return enemie.getHeight();
+    }
+
+    @Override
     public void setCollisionDetector(CollisionDetector myCollisionDetector) {
         this.collisionDetector = myCollisionDetector;
     }

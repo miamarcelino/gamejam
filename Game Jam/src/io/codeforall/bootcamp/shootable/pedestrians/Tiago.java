@@ -4,24 +4,37 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Tiago extends Pedestrian {
 
-    private Picture tiago;
     private boolean dead;
 
     public Tiago() {
-        tiago = new Picture(800, 50, "resources/Pedestrians/Tiago/tiago-alive.png");
+        pedestrian = new Picture(800, 50, "resources/Pedestrians/Tiago/tiago-alive.png");
         dead = false;
-    }
-
-    public void init() {
-        tiago.draw();
-    }
-
-    public boolean isDead() {
-        return dead;
     }
 
     @Override
     public void die() {
-        tiago.load("resources/Pedestrians/Tiago/tiago-dead.png");
+        if (dead) {
+            return;
+        }
+
+        dead = true;
+
+        pedestrian.load("resources/Pedestrians/Tiago/tiago-dead.png");
+        pedestrian.draw();
+
+        new Thread(() -> {
+
+            try {
+                Thread.sleep(1000);
+
+            } catch (InterruptedException e) {
+                System.out.println("Tiago is dead...");
+                e.printStackTrace();
+                return;
+            }
+
+            pedestrian.delete();
+
+        }).start();
     }
 }

@@ -26,6 +26,11 @@ public class Maria extends Player {
     }
 
     @Override
+    public Bullet createBullet() {
+        return new MariaBullet(getX(), getY());
+    }
+
+    @Override
     public boolean canMoveUp() {
         return getY() > 10;
     }

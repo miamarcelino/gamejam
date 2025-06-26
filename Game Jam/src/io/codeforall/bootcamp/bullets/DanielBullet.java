@@ -11,5 +11,8 @@ public class DanielBullet extends Bullet {
         super(startX, startY, "resources/Bullets/bullet-daniel.png");
     }
 
-
+    @Override
+    public Bullet createBullet() {
+        return new DanielBullet(getX(), getY());
+    }
 }

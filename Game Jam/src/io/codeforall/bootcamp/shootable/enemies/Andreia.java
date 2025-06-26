@@ -1,7 +1,5 @@
 package io.codeforall.bootcamp.shootable.enemies;
 
-import org.academiadecodigo.simplegraphics.pictures.Picture;
-
 public class Andreia extends Enemy {
 
     private boolean dead;

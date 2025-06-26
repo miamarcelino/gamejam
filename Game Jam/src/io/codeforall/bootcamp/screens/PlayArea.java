@@ -20,13 +20,13 @@ public class PlayArea {
     private CollisionDetector myCollisionDetector;      // The Collision detector
     private int manufacturedTargets = 20;               // We start with 20 Targets
 
-    private Thread shootingThread;
     private MyKeyboardHandler myKeyboardHandler;
+
+    private boolean readyToSpawnNext = false;           // Flag to spawn next Target
 
     public PlayArea(MyKeyboardHandler myKeyboardHandler) {
         this.myKeyboardHandler = myKeyboardHandler;
         playArea = new Picture(10, 10, "resources/Background/background-blueprint.png");
-
     }
 
     public void setMyPlayer(Player player) {
@@ -39,6 +39,14 @@ public class PlayArea {
 
         if(myPlayer != null) {
             myPlayer.init();
+        }
+
+        for(Target t: targets) {
+            if(t != null && !t.isDead()) {
+                t.init();
+                System.out.println("FORCE redraw: "  + t.getClass().getSimpleName() +
+                        " at X=" + t.getX() + " Y=" + t.getY());
+            }
         }
     }
 
@@ -56,36 +64,24 @@ public class PlayArea {
     }
 
     public void keepShooting() {
-        stopShootingThread();           // Prevents multiple threads
 
-        shootingThread = new Thread(() -> {
+        Bullet bullet = myPlayer.createBullet();  // Player decides what bullet it fires
+        bullet.setStartingX(myPlayer.getX() + 40);
+        bullet.setStartingY(myPlayer.getY() + 100);
+        bullet.initBullet();
+        myPlayer.shootingFace();
 
-            if(myBullet == null) {
-                System.out.println("myBullet is null in keepShooting()");
-                return;
-            }
-           myBullet.setStartingX(myPlayer.getX() + 40);
-           myBullet.setStartingY(myPlayer.getY() + 100);
-
-            myBullet.initBullet();
-            myPlayer.shootingFace();
-            System.out.println("Started shooting...");
-
-            for (int i = 0; i < myBullet.getMaxAmmo(); i++) {
-                myBullet.shootBullet();
-
+        new Thread(() -> {
+            for (int i = 0; i < bullet.getMaxAmmo(); i++) {
+                bullet.shootBullet();
                 try {
                     Thread.sleep(50);
-
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    break;
                 }
             }
-            myBullet.setAmmo(0);
-            myBullet.deleteBullet();
-            System.out.println("Finished shooting...");
-        });
-        shootingThread.start();
+          //  bullet.deleteBullet();
+        }).start();
     }
 
     public void stopShootingThread() {
@@ -96,17 +92,23 @@ public class PlayArea {
     }
 
     public void spawnEnemies() {
+
+        int[] yPositions = {10, 330, 650};
+
         for (int i = 0; i < manufacturedTargets; i++) {
             System.out.println("Spawning enemy #" + i);
 
             Target t = TargetFactory.getNewTarget();
 
-            if(t != null) {
+            if (t != null) {
+                int y = yPositions[(int) (Math.random() * yPositions.length)];
+                t.setY(y);
+                t.setX(1024);
+
                 t.setCollisionDetector(myCollisionDetector);
                 System.out.println("Initializing target " + i + ": " + t.getClass().getSimpleName());
-                t.init();
-                targets[i] = t;
 
+                targets[i] = t;
             } else {
                 System.out.println("TargetFactory returned null at index " + i);
             }

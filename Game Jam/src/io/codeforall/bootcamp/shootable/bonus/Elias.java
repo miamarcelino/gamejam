@@ -12,7 +12,7 @@ public class Elias implements Target {
 
     public Elias() {
         super();
-        elias = new Picture(430, 400, "resources/BonusChar/Elias/elias-down.png");
+        elias = new Picture(1000, 600, "resources/BonusChar/Elias/elias-down.png");
         dead = false;
 
         init();
@@ -64,6 +64,28 @@ public class Elias implements Target {
     @Override
     public boolean isDead() {
         return dead;
+    }
+
+    @Override
+    public void setX(int x) {
+        int dx = x - elias.getX();
+        elias.translate(dx, 0);
+    }
+
+    @Override
+    public void setY(int y) {
+        int dy = y - elias.getY();
+        elias.translate(0, dy);
+    }
+
+    @Override
+    public int getWidth() {
+        return elias.getWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return elias.getHeight();
     }
 
     @Override

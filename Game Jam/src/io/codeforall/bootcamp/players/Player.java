@@ -46,4 +46,8 @@ public abstract class Player {
     public Picture getPicture() {
         return normalFace;
     }
+
+    public Bullet createBullet() {
+        throw new UnsupportedOperationException("This player cannot shoot!");
+    }
 }

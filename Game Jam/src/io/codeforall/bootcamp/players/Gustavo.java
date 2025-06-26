@@ -26,6 +26,11 @@ public class Gustavo extends Player {
     }
 
     @Override
+    public Bullet createBullet() {
+        return new GustavoBullet(getX(), getY());
+    }
+
+    @Override
     public boolean canMoveUp() {
         return getY() > 10;
     }

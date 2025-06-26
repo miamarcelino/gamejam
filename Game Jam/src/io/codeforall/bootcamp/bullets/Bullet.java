@@ -19,6 +19,10 @@ public class Bullet {
         bullet = new Picture(startX, startY, rsc);
     }
 
+    public Bullet createBullet() {
+        throw new UnsupportedOperationException("This player cannot shoot!");
+    }
+
     public void initBullet() {
         bullet.draw();
     }
@@ -51,9 +55,18 @@ public class Bullet {
     public void shootBullet() {
 
         if (getAmmo() < getMaxAmmo()) {
-            bullet.translate(180, 0);
+            int nextX = bullet.getX() + 180;
+            int screenLimit = 1024;
 
-            setAmmo(getAmmo());
+            if(nextX < screenLimit) {
+                bullet.translate(180, 0);
+
+            } else {
+                deleteBullet();             // remove Bullet when out of bounds
+            }
+
+
+            ammo++;
         }
     }
 
@@ -72,6 +85,18 @@ public class Bullet {
 
     public int getMaxX() {
         return bullet.getMaxX();
+    }
+
+    public int getWidth() {
+        return bullet.getWidth();
+    }
+
+    public int getHeight() {
+        return bullet.getHeight();
+    }
+
+    public int getX() {
+        return bullet.getX();
     }
 
     public int getY() {

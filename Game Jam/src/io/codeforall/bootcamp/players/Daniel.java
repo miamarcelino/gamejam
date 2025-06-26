@@ -28,6 +28,11 @@ public class Daniel extends Player {
 
 
     @Override
+    public Bullet createBullet() {
+        return new DanielBullet(getX(), getY());
+    }
+
+    @Override
     public boolean canMoveUp() {
         return getY() > 10;
     }

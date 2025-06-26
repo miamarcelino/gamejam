@@ -9,4 +9,8 @@ public class GustavoBullet extends Bullet{
     public GustavoBullet(int startX, int startY) {
         super(startX, startY, "resources/Bullets/bullet-gustavo.png");
     }
+
+    public Bullet createBullet() {
+        return new GustavoBullet(getX(), getY());
+    }
 }
