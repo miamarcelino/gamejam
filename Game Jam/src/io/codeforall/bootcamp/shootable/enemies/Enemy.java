@@ -9,6 +9,7 @@ public class Enemy implements Target {
     protected Picture enemie;
     private boolean dead;
     private CollisionDetector collisionDetector;
+    private long spawnTime;
 
     public Enemy(int x, int y, String src) {
         this.enemie = new Picture(x, y, src);
@@ -19,6 +20,26 @@ public class Enemy implements Target {
     @Override
     public void init() {
         enemie.draw();
+        spawnTime = System.currentTimeMillis();
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(3000);
+
+            } catch (InterruptedException e) {
+                System.out.println("3 seconds without dying");
+                e.printStackTrace();
+               return;
+            }
+
+            if(!dead) {
+                delete();
+
+                if(collisionDetector != null) {
+                    collisionDetector.notifyPlayAreaEnemyDied();
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -40,7 +61,7 @@ public class Enemy implements Target {
         new Thread(() -> {
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
 
             } catch (InterruptedException e) {
                 System.out.println("Enemy is dead ...");
@@ -99,6 +120,24 @@ public class Enemy implements Target {
     @Override
     public void setCollisionDetector(CollisionDetector myCollisionDetector) {
         this.collisionDetector = myCollisionDetector;
+    }
+
+    @Override
+    public void setSpawnTime(long time) {
+        this.spawnTime = time;
+    }
+
+    @Override
+    public long getSpawnTime() {
+        return spawnTime;
+    }
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
+    public CollisionDetector getCollisionDetector() {
+        return collisionDetector;
     }
 
 }

@@ -7,7 +7,7 @@ public enum TargetType {
     ROLO,
     AFONSO,
     MANEL,
-   // OTAVIO,
+    OTAVIO,
     TIAGO,
-   // ELIAS;
+    ELIAS;
 }

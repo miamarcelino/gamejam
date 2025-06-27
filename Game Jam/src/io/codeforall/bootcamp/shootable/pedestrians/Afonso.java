@@ -9,7 +9,7 @@ public class Afonso extends Pedestrian {
     private CollisionDetector collisionDetector;
 
     public Afonso() {
-        pedestrian = new Picture(800, 50, "resources/Pedestrians/Afonso/afonso-alive.png");
+        pedestrian = new Picture(500, 50, "resources/Pedestrians/Afonso/afonso-alive.png");
         dead = false;
     }
 

@@ -4,26 +4,31 @@ import io.codeforall.bootcamp.CollisionDetector;
 
 public interface Target {
 
-    public void init();
+    void init();
 
-    public void delete();
+    void delete();
 
-    public void die();
+    void die();
 
-    public int getX();
+    int getX();
 
-    public int getY();
+    int getY();
 
     boolean isDead();
 
-    public void setX(int x);
+    void setX(int x);
 
-    public void setY(int y);
+    void setY(int y);
 
-    public int getWidth();
+    int getWidth();
 
-    public int getHeight();
+    int getHeight();
 
     void setCollisionDetector(CollisionDetector myCollisionDetector);
+
+    void setSpawnTime(long time);
+
+    long getSpawnTime();
+
 }
 

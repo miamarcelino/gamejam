@@ -9,6 +9,7 @@ public class Elias implements Target {
     private Picture elias;
     private boolean dead;
     private CollisionDetector collisionDetector;
+    private long spawnTime;
 
     public Elias() {
         super();
@@ -91,6 +92,16 @@ public class Elias implements Target {
     @Override
     public void setCollisionDetector(CollisionDetector myCollisionDetector) {
         this.collisionDetector = myCollisionDetector;
+    }
+
+    @Override
+    public void setSpawnTime(long time) {
+        this.spawnTime = time;
+    }
+
+    @Override
+    public long getSpawnTime() {
+        return spawnTime;
     }
 
     private void delayMethod(int ms) {

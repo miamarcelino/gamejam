@@ -5,22 +5,19 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Carolina extends Enemy {
 
-    private boolean dead;
-    private CollisionDetector collisionDetector;
-
     public Carolina() {
         super(1000, (int) (Math.random() * 700), "resources/Enemies/Carolina/carolina-alive.png");
-        dead = false;
+
     }
 
     @Override
     public void die() {
 
-        if(dead) {
+        if(isDead()) {
             return;
         }
 
-        dead = true;
+        setDead(true);
 
         enemie.load("resources/Enemies/Carolina/carolina-dead.png");
         enemie.draw();
@@ -28,7 +25,7 @@ public class Carolina extends Enemy {
         new Thread(() -> {
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
 
             } catch (InterruptedException e) {
                 System.out.println("Carolina is dead...");
@@ -39,8 +36,8 @@ public class Carolina extends Enemy {
             enemie.delete();
 
             // Notify via CollisionDetector -> PlayArea
-            if(collisionDetector != null) {
-                collisionDetector.notifyPlayAreaEnemyDied();
+            if(getCollisionDetector() != null) {
+                getCollisionDetector().notifyPlayAreaEnemyDied();
             }
         }).start();
     }

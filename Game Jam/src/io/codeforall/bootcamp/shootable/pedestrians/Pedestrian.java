@@ -9,6 +9,7 @@ public class Pedestrian implements Target {
     protected Picture pedestrian;
     private boolean dead;
     private CollisionDetector collisionDetector;
+    private long spawnTime;
 
     public Pedestrian() {
         super();
@@ -18,6 +19,26 @@ public class Pedestrian implements Target {
     @Override
     public void init() {
         pedestrian.draw();
+        spawnTime = System.currentTimeMillis();
+
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+
+            } catch (InterruptedException e) {
+                System.out.println("3 seconds without dying");
+                e.printStackTrace();
+                return;
+            }
+
+            if(!dead) {
+                delete();
+
+                if(collisionDetector != null) {
+                    collisionDetector.notifyPlayAreaEnemyDied();
+                }
+            }
+        }).start();
     }
 
     @Override
@@ -70,5 +91,15 @@ public class Pedestrian implements Target {
     @Override
     public void setCollisionDetector(CollisionDetector myCollisionDetector) {
         this.collisionDetector = myCollisionDetector;
+    }
+
+    @Override
+    public void setSpawnTime(long time) {
+        this.spawnTime = time;
+    }
+
+    @Override
+    public long getSpawnTime() {
+        return spawnTime;
     }
 }

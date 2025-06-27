@@ -4,21 +4,17 @@ import io.codeforall.bootcamp.CollisionDetector;
 
 public class Andreia extends Enemy {
 
-    private boolean dead;
-    private CollisionDetector collisionDetector;
-
     public Andreia() {
         super(1000, (int) (Math.random() * 700), "resources/Enemies/Andreia/andreia-alive.png");
-        dead = false;
     }
 
     @Override
     public void die() {
-        if(dead) {
+        if(isDead()) {
             return;
         }
 
-        dead = true;
+        setDead(true);
 
         enemie.load("resources/Enemies/Andreia/andreia-dead.png");
         enemie.draw();
@@ -26,7 +22,7 @@ public class Andreia extends Enemy {
         new Thread(() -> {
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(2000);
 
             } catch (InterruptedException e) {
                 System.out.println("Andreia is dead...");
@@ -37,8 +33,8 @@ public class Andreia extends Enemy {
             enemie.delete();
 
             // Notify via CollisionDetector -> PlayArea
-            if(collisionDetector != null) {
-                collisionDetector.notifyPlayAreaEnemyDied();
+            if(getCollisionDetector() != null) {
+                getCollisionDetector().notifyPlayAreaEnemyDied();
             }
 
         }).start();

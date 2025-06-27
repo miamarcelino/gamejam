@@ -9,7 +9,7 @@ public class Otavio extends Pedestrian{
     private CollisionDetector collisionDetector;
 
     public Otavio() {
-        pedestrian = new Picture(800, 50, "resources/Pedestrians/Otavio/otavio-alive.png");
+        pedestrian = new Picture(500, 50, "resources/Pedestrians/Otavio/otavio-alive.png");
         dead = false;
     }
 

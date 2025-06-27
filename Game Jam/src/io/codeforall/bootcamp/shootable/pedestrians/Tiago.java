@@ -9,7 +9,7 @@ public class Tiago extends Pedestrian {
     private CollisionDetector collisionDetector;
 
     public Tiago() {
-        pedestrian = new Picture(800, 50, "resources/Pedestrians/Tiago/tiago-alive.png");
+        pedestrian = new Picture(500, 50, "resources/Pedestrians/Tiago/tiago-alive.png");
         dead = false;
     }
 

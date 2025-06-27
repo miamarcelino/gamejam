@@ -9,7 +9,7 @@ public class Manel extends Pedestrian {
     private CollisionDetector collisionDetector;
 
     public Manel() {
-        pedestrian = new Picture(800, 50, "resources/Pedestrians/Manel/manel-alive.png");
+        pedestrian = new Picture(500, 50, "resources/Pedestrians/Manel/manel-alive.png");
         dead = false;
     }
 
