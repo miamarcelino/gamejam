@@ -151,7 +151,7 @@ public class PlayArea {
         } else {
             lastPosition = 10;
         }
-       
+
 
         if (t != null && !t.isDead()) {
 
@@ -211,9 +211,19 @@ public class PlayArea {
         new Thread(() -> {
             while (true) {
 
+                if (myBullet != null) {
+                    myBullet.shootBullet(); // Move here instead of in its own thread
+                }
 
                 if (myCollisionDetector != null) {
-                    myCollisionDetector.check();
+                    myCollisionDetector.check(); // Check collisions
+                }
+
+                // Delete dead targets (safe now)
+                for (Target t : targets) {
+                    if (t != null && t.isDead()) {
+                        t.delete();
+                    }
                 }
 
                 if (readyToSpawnNext) {
@@ -222,14 +232,14 @@ public class PlayArea {
                 }
 
                 try {
-                    Thread.sleep(50); // Checks collisions every 50ms
-
+                    Thread.sleep(30); // Lower delay for smooth motion
                 } catch (InterruptedException e) {
                     break;
                 }
             }
         }).start();
     }
+
 
     public Target getCurrentTarget() {
 
